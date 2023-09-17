@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Admin extends Model
 {
-
     protected $fillable = [
         'name',
         'dob',
@@ -27,11 +26,18 @@ class Admin extends Model
         // Add other attributes that need to be fillable here
     ];
 
-    public function getPemohonData()
-{
-    $pemohonData = Admin::all(); // Mengambil semua data pemohon
-    return $pemohonData;
-}
+    protected $table = 'pemohon';
 
-protected $table = 'pemohon';
+    public static function editPemohonData($id, $data)
+    {
+        $pemohon = Admin::find($id);
+        if (!$pemohon) {
+            return false; // Pemohon dengan ID yang diberikan tidak ditemukan
+        }
+
+        // Update data pemohon
+        $pemohon->update($data);
+
+        return true; // Data berhasil diupdate
+    }
 }
