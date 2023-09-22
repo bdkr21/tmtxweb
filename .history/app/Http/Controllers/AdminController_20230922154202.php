@@ -370,21 +370,21 @@ class AdminController extends Controller
                 if (strpos($templateContent, $tagDay) !== false) {
                     $templateContent = str_replace($tagDay, $formattedDayIndonesia, $templateContent);
                 }
-                // // Simpan hasil ke file sementara
-                // $tempFilePath = public_path('outputbaru2.rtf');
-                // file_put_contents($tempFilePath, $templateContent);
+                // Simpan hasil ke file sementara
+                $tempFilePath = public_path('outputbaru2.rtf');
+                file_put_contents($tempFilePath, $templateContent);
                 
-                // ConvertApi::setApiSecret('bzF3tCL9x6IR0FFl');
-                // $result = ConvertApi::convert('pdf', [
-                //         'File' => $tempFilePath,
-                //     ], 'rtf'
-                // );
-                // // Save the PDF file
-                // $pdfFilePath = public_path(date('Ymd_his') . '.pdf');
-                // $result->saveFiles($pdfFilePath);
+                ConvertApi::setApiSecret('bzF3tCL9x6IR0FFl');
+                $result = ConvertApi::convert('pdf', [
+                        'File' => $tempFilePath,
+                    ], 'rtf'
+                );
+                // Save the PDF file
+                $pdfFilePath = public_path(date('Ymd_his') . '.pdf');
+                $result->saveFiles($pdfFilePath);
 
-                // // Download the PDF file as a response
-                // return response()->download($pdfFilePath)->deleteFileAfterSend();
+                // Download the PDF file as a response
+                return response()->download($pdfFilePath)->deleteFileAfterSend();
     }
  }
 }

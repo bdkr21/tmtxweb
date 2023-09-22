@@ -3,9 +3,9 @@
     <div class="sidebar-header position-relative">
       <div class="d-flex justify-content-between align-items-center">
         <div class="logo">
-          <a href="/"
-            ><img
-              src="./assets/compiled/svg/logo.svg"
+          <a href="index.html"
+            ><img 
+              src="{{asset('assets/compiled/svg/logo.svg')}}"
               alt="Logo"
               srcset=""
           /></a>
@@ -80,10 +80,24 @@
         <li class="sidebar-title">Menu</li>
 
         <li class="sidebar-item">
-          <a href="index.html" class="sidebar-link">
+          <a href="{{ route('admin.index') }}" class="sidebar-link">
             <i class="bi bi-grid-fill"></i>
             <span>Dashboard</span>
           </a>
+        </li>
+        <li class="sidebar-item has-sub">
+          <a href="#" class="sidebar-link">
+            <i class="bi bi-grid-1x2-fill"></i>
+            <span>Data</span>
+          </a>
+
+          <ul class="submenu">
+            <li class="submenu-item">
+              <a href="{{ route('admin.dataPemohon') }}" class="submenu-link"
+                >Peminjam</a
+              >
+            </li>
+          </ul>
         </li>
         <li class="sidebar-item">
           <a href="/" class="sidebar-link">
@@ -94,4 +108,3 @@
       </ul>
     </div>
   </div>
-</div>
