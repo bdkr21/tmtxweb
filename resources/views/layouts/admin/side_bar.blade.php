@@ -4,7 +4,7 @@
       <div class="d-flex justify-content-between align-items-center">
         <div class="logo">
           <a href="index.html"
-            ><img 
+            ><img
               src="{{asset('assets/compiled/svg/logo.svg')}}"
               alt="Logo"
               srcset=""
@@ -87,7 +87,7 @@
         </li>
         <li class="sidebar-item has-sub">
           <a href="#" class="sidebar-link">
-            <i class="bi bi-grid-1x2-fill"></i>
+            <i class="fa fa-table "></i>
             <span>Data</span>
           </a>
 
@@ -101,9 +101,19 @@
         </li>
         <li class="sidebar-item">
           <a href="/" class="sidebar-link">
-            <i class="bi bi-map-fill"></i>
+            <i class="fa fa-home"></i>
             <span>HOME</span>
           </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="{{route('logout')}}" class="sidebar-link"onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+            <i class="fa fa-sign-out"></i>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
+            <span>LOGOUT</span>
+          </a>
+        </li>
         {{-- NEW COMPONENT HERE --}}
       </ul>
     </div>

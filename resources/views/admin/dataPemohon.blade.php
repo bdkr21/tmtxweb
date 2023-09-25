@@ -47,20 +47,20 @@
                           <a href="#" class="btn btn-info open-detail-modal" data-item="{{ $item->id }}">
                             <i class="fa fa-eye"></i> Detail
                           </a>
-                          
+
                           <a href="#" class="btn btn-warning open-edit-modal" data-item="{{ $item->id }}">
                             <i class="fa fa-pencil"></i> Edit
                           </a>
-                                                     
+
                           <a href="{{ route('admin.ngeprint', ['id' => $item->id]) }}" class="btn btn-success">
                             <i class="fa fa-pencil"></i> PRINT
                           </a>
-                        
+
                           <form action="{{ route('admin.destroy', $item->id) }}" method="POST" style="display: inline-block;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
-                              Delete
+                            <button type="submit" class="btn btn-danger delete-btn" data-admin-id="{{ $item->id }}">
+                                Delete
                             </button>
                           </form>
                         </td>
@@ -79,7 +79,7 @@
       <footer>
         <div class="footer clearfix mb-0 text-muted">
           <div class="float-start">
-            <p>2023 &copy; Mazer</p>
+            <p>2023 &copy; Anak</p>
           </div>
           <div class="float-end">
             {{-- <p>
@@ -104,7 +104,7 @@
               type: 'GET',
               dataType: 'json',
               success: function (data) {
-                $('#detailModal').find('.modal-title').text('Edit Data ' + data.id);
+                $('#detailModal').find('.modal-title').text('Detail Data ');
                 $('#detailModal').find('#id').val(data.id);
                 $('#detailModal').find('#name').val(data.name);
                 $('#detailModal').find('#dob').val(data.dob);
@@ -114,7 +114,9 @@
                 $('#detailModal').find('#agency').val(data.agency);
                 $('#detailModal').find('#namaAtasan').val(data.namaAtasan);
                 $('#detailModal').find('#noTelpAtasan').val(data.noTelpAtasan);
-                $('#detailModal').find('#nominalPermohonan').val(data.nominalPermohonan);
+
+                var formattedNominal = 'Rp.' + new Intl.NumberFormat('id-ID').format(data.nominalPermohonan);
+                $('#detailModal').find('#nominalPermohonan').val(formattedNominal);
 
                 $('#detailModal').modal('show');
             },
@@ -132,7 +134,7 @@
               type: 'GET',
               dataType: 'json',
               success: function (data) {
-                $('#editModal').find('.modal-title').text('Edit Data ' + data.id);
+                $('#editModal').find('.modal-title').text('Edit Data');
                 $('#editModal').find('#id').val(data.id);
                 $('#editModal').find('#name').val(data.name);
                 $('#editModal').find('#dob').val(data.dob);
@@ -153,27 +155,74 @@
         );
     });
     $(document).on('click', '#submitBtn', function(e) {
-      e.preventDefault();
-      var itemId = $('#id').val();
-      $.ajax({
-          url: "{{ url('admin/') }}" + '/' + itemId,
-          type: 'PUT',
-          dataType: 'json',
-          data: $('#formEdit').serialize(),
-          success: function(data) {
-              setTimeout(function() {
-                                      window.location.href =
-                                          "{{ route('admin.dataPemohon') }}";
-                                  }, 500);
-          },
-          error: function (data) {
-              alert('Data tidak ditemukan');
-              // Tambahkan logika lain yang diperlukan untuk menangani kesalahan
-          }
-      });
-  });
+        e.preventDefault();
+        var itemId = $('#id').val();
+            $.ajax({
+                url: "{{ url('admin/') }}" + '/' + itemId,
+                type: 'PUT',
+                dataType: 'json',
+                data: $('#formEdit').serialize(),
+                success: function(data) {
+                    $('#editModal').modal('show');
+
+                    toastr.success('Data has been updated successfully', 'Success');
+
+                    setTimeout(function() {
+                                            window.location.href =
+                                                "{{ route('admin.dataPemohon') }}";
+                                        }, 1500);
+                },
+                error: function (data) {
+                    toastr.error('Data update failed', 'Error');
+
+                    alert('Data tidak ditemukan');
+                    // Tambahkan logika lain yang diperlukan untuk menangani kesalahan
+                }
+            });
+        });
+
+        // Attach a click event handler to the delete buttons
+        $(document).on('click', '.delete-btn', function(e) {
+            e.preventDefault();
+
+            var adminId = $(this).data('admin-id');
+
+            // Show a modal confirmation dialog
+            if (confirm('Apakah Anda yakin ingin menghapus data ini?')) {
+                // User confirmed deletion, proceed with the AJAX request
+                $.ajax({
+                    url: "{{ route('admin.destroy', ':id') }}".replace(':id', adminId),
+                    type: 'POST', // Change this to POST since Laravel uses POST for delete requests
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "_method": "DELETE"
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.status) {
+                            // Show a success Toastr notification
+                            toastr.success(response.message, 'Success');
+
+                            // Optionally, refresh the page or update the UI as needed
+                            window.location.reload();
+                        } else {
+                            // Show an error Toastr notification
+                            toastr.error(response.message, 'Error');
+                        }
+                    },
+                    error: function() {
+                        // Show an error Toastr notification for AJAX failure
+                        toastr.error('Error occurred while deleting admin.', 'Error');
+                    }
+                });
+            } else {
+                // User canceled the deletion
+                toastr.warning('Deletion canceled.', 'Warning');
+            }
+        });
+
 
 </script>
 
 @endsection
-  
+

@@ -1,5 +1,20 @@
+import 'toastr/toastr.scss';
+import toastr from 'toastr';
+
+
 window._ = require('lodash');
 
+try {
+    require('bootstrap');
+} catch (e) {}
+
+window.toastr = toastr;
+
+toastr.options = {
+    "closeButton": true,
+    "positionClass": "toast-top-right",
+    // Opsi tambahan sesuai kebutuhan Anda
+};
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
  * to our Laravel back-end. This library automatically handles sending the

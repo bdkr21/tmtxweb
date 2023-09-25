@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Brian2694\Toastr\Facades\Toastr; // Import the Toastr facade
 use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -84,87 +85,88 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'name' => 'required|string',
-            'dob' => 'required|string',
-            'area' => 'required|string',
-            'noSC' => 'required|string',
-            'noKTP' => 'required|string',
-            'agency' => 'required|string',
-            'namaAtasan' => 'required|string',
-            'noTelpAtasan' => 'required|string',
-            'nominalPermohonan' => 'required|string',
-            'pencairanTahap1' => 'required|string',
-            'pencairanTahap2' => 'required|string',
-            'totalDiterima' => 'required|string',
-            'nominalPermohonan' => 'required', // Add validation rules for other fields
-            'file' => 'required'
-        ]);
+        // $validatedData = $request->validate([
+        //     'name' => 'required|string',
+        //     'dob' => 'required|string',
+        //     'area' => 'required|string',
+        //     'noSC' => 'required|string',
+        //     'noKTP' => 'required|string',
+        //     'agency' => 'required|string',
+        //     'namaAtasan' => 'required|string',
+        //     'noTelpAtasan' => 'required|string',
+        //     'nominalPermohonan' => 'required|string',
+        //     'pencairanTahap1' => 'required|string',
+        //     'pencairanTahap2' => 'required|string',
+        //     'totalDiterima' => 'required|string',
+        //     'nominalPermohonan' => 'required', // Add validation rules for other fields
+        //     'file' => 'required'
+        // ]);
 
-        // Create a new Admin model instance and fill it with validated data
-            $admin = new Admin();
-            $admin->fill($validatedData);
+        // // Create a new Admin model instance and fill it with validated data
+        //     $admin = new Admin();
+        //     $admin->fill($validatedData);
 
-            // Handle file upload if needed
-            if ($request->hasFile('file')) {
-                $file = $request->file('file');
-                // Handle file storage and save the file path to the model.
-                // For example:
-                $fileName = time() . '.' . $file->getClientOriginalExtension();
-                $file->move(public_path('gambar'), $fileName);
-                $img_encoded= base64_encode(file_get_contents(public_path('gambar/' . $fileName)));
-                $admin->filegambar = $img_encoded;
-                File::delete(public_path('gambar/' . $fileName));
-            }
-                // Save the data to the database
-                $admin->save();
+        //     // Handle file upload if needed
+        //     if ($request->hasFile('file')) {
+        //         $file = $request->file('file');
+        //         // Handle file storage and save the file path to the model.
+        //         // For example:
+        //         $fileName = time() . '.' . $file->getClientOriginalExtension();
+        //         $file->move(public_path('gambar'), $fileName);
+        //         $img_encoded= base64_encode(file_get_contents(public_path('gambar/' . $fileName)));
+        //         $admin->filegambar = $img_encoded;
+        //         File::delete(public_path('gambar/' . $fileName));
+        //     }
+        //         // Save the data to the database
+        //         $admin->save();
 
-        // Handle file upload if needed
-        if ($request->hasFile('file')) {
-            $file = $request->file('file');
-            // Handle file storage and save the file path to the model.
-        }
+        // // Handle file upload if needed
+        // if ($request->hasFile('file')) {
+        //     $file = $request->file('file');
+        //     // Handle file storage and save the file path to the model.
+        // }
 
-        
 
-        // Redirect or return a response as needed
-        return redirect()->route('form')->with('success', 'Data has been saved.');
+
+        // // Redirect or return a response as needed
+        // return redirect()->route('form')->with('success', 'Data has been saved.');
     }
 
     /**
      * Display the specified resource.
      *
+     * use Brian2694\Toastr\Facades\Toastr; // Import the Toastr facade
      * @param  \App\Models\admin  $admin
      * @return \Illuminate\Http\Response
      */
     public function show(admin $admin)
     {
         // Temukan data Admin berdasarkan ID
-        
+
     }
 
     /**
      * Show the form for editing the specified resource.
      *
+     * use Brian2694\Toastr\Facades\Toastr; // Import the Toastr facade
      * @param  \App\Models\admin  $admin
      * @return \Illuminate\Http\Response
      */
     public function edit(admin $admin)
     {
-        
+
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illu
+     * use Brian2694\Toastr\Facades\Toastr; // Import the Toastr facademinate\Http\Request  $request
      * @param  \App\Models\admin  $admin
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        // dd($request);
-        // exit();
         // Validasi input form
 
         $validatedData = $request->validate([
@@ -180,7 +182,7 @@ class AdminController extends Controller
         ]);
         // Temukan data Admin berdasarkan ID
         $admin = Admin::findOrFail($id);
-        
+
         try {
             //code...
             $admin->update([
@@ -194,11 +196,11 @@ class AdminController extends Controller
                 'noTelpAtasan' => $request->input('noTelpAtasan'),
                 'nominalPermohonan' => $request->input('nominalPermohonan'),
             ]);
-        
+
             // Hitung ulang pencairan tahap 1, pencairan tahap 2, dan total diterima berdasarkan nominal yang baru
             $biayaAdministrasi = 25000;
             $selectedNominal = (int)$request->input('nominalPermohonan');
-        
+
             if ($selectedNominal === 800000) {
                 $pencairanTahap1 = $selectedNominal - $biayaAdministrasi;
                 $pencairanTahap2 = 0;
@@ -208,40 +210,55 @@ class AdminController extends Controller
                 $pencairanTahap2 = $pencairanTahap1;
                 $totalDiterima = $pencairanTahap1 + $pencairanTahap2;
             }
-        
+
             $admin->update([
                 'pencairanTahap1' => $pencairanTahap1,
                 'pencairanTahap2' => $pencairanTahap2,
                 'totalDiterima' => $totalDiterima,
             ]);
+            // Show a success Toastr notification
+            Toastr::success('Data has been updated successfully', 'Success');
+
             return response()->json([
                 'status' => true,
                 'message' => 'Data has been updated successfully'
             ]);
 
         } catch (\Throwable $th) {
+            // Show an error Toastr notification
+            Toastr::error('Data update failed', 'Error');
+
             return response()->json([
                 'status' => false,
-                'message' => 'Data has been cancelled'
+                'message' => 'Data update failed'
             ]);
         }
-    }    
-    
+    }
+
 
     /**
      * Remove the specified resource from storage.
      *
+     * use Brian2694\Toastr\Facades\Toastr; // Import the Toastr facade
      * @param  \App\Models\admin  $admin
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-    $admin = Admin::findOrFail($id); // Mencari data admin berdasarkan ID
+        $admin = Admin::findOrFail($id); // Find the admin data by ID
 
-    $admin->delete(); // Menghapus data dari database
+        if ($admin->delete()) {
+            $message = 'data telah dihapus.';
+            $status = true;
+        } else {
+            $message = 'Gagal menghapus.';
+            $status = false;
+        }
 
-    return redirect()->route('admin.index') // Mengarahkan kembali ke halaman indeks
-        ->with('success', 'Admin telah dihapus.'); // Pesan sukses yang akan ditampilkan kepada pengguna
+        return response()->json([
+            'status' => $status,
+            'message' => $message,
+        ]);
     }
 
     public function getAdminData($id)
@@ -255,12 +272,12 @@ class AdminController extends Controller
 
         // dd($data->id);
         //     exit();
-            
+
             $templatePath = public_path('basic_form.rtf'); // Ganti dengan path ke berkas RTF template
 
             if(file_exists($templatePath)) {
                 $templateContent = file_get_contents($templatePath);
-    
+
                 // Daftar field dan tag yang sesuai dalam template RTF
                 $fieldTags = [
                     'namaAtasan' => 'INPUT_NAMA_ATASAN',
@@ -276,7 +293,7 @@ class AdminController extends Controller
                     'pencairanTahap2' => 'INPUT_TAHAP_2',
                     'totalDiterima' => 'INPUT_TOTAL_DITERIMA'
                 ];
-                
+
                 foreach ($fieldTags as $field => $tag) {
                     $value = isset($data[$field]) ? $data[$field] : '';
                     if (strpos($templateContent, $tag) !== false) {
@@ -286,7 +303,7 @@ class AdminController extends Controller
                 $image = bin2hex(base64_decode($data->filegambar));
                 // $image = file_get_contents();
                 $templateContent = str_replace("89504e470d0a1a0a0000000d4948445200000096000000960802000000b363e6b5000000017352474200aece1ce90000000467414d410000b18f0bfc6105000000097048597300000ec300000ec301c76fa8640000005949444154785eedc13101000000c2a0f54f6d076f20000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000038d400085100019ab63a600000000049454e44ae426082", $image, $templateContent);
-    
+
                 // Format nominal
                 $formatFields = ['nominalPermohonan', 'pencairanTahap1', 'pencairanTahap2', 'totalDiterima'];
                 foreach ($formatFields as $field) {
@@ -299,10 +316,10 @@ class AdminController extends Controller
                         }
                     }
                 }
-    
+
                 $tag = 'DATE_FULL';
                 $tagDay = 'DATE_DAY';
-    
+
                 $dayNamesIndonesia = array(
                     'Sunday' => 'Minggu',
                     'Monday' => 'Senin',
@@ -312,7 +329,7 @@ class AdminController extends Controller
                     'Friday' => 'Jumat',
                     'Saturday' => 'Sabtu'
                 );
-    
+
                 $monthNamesIndonesia = array(
                     'January' => 'Januari',
                     'February' => 'Februari',
@@ -327,30 +344,30 @@ class AdminController extends Controller
                     'November' => 'November',
                     'December' => 'Desember'
                 );
-    
+
                 $date = date("Y-m-d"); // Menggunakan tanggal saat ini
                 $formattedDate = date("l, d F Y", strtotime($date)); // Mendapatkan nama hari, tanggal, bulan, dan tahun dalam bahasa Inggris
-    
+
                 // Mengganti nama hari dalam bahasa Inggris dengan versi bahasa Indonesia
                 if (array_key_exists(date("l", strtotime($date)), $dayNamesIndonesia)) {
                     $formattedDay = $dayNamesIndonesia[date("l", strtotime($date))];
                     $formattedDate = str_replace(date("l", strtotime($date)), $formattedDay, $formattedDate);
                 }
-    
+
                 // Mengganti nama bulan dalam bahasa Inggris dengan versi bahasa Indonesia
                 foreach ($monthNamesIndonesia as $englishMonth => $indonesianMonth) {
                     if (strpos($formattedDate, $englishMonth) !== false) {
                         $formattedDate = str_replace($englishMonth, $indonesianMonth, $formattedDate);
                     }
                 }
-    
+
                 if (strpos($templateContent, $tag) !== false) {
                     $templateContent = str_replace($tag, $formattedDate, $templateContent);
                 }
-    
+
                 $dateday = date("Y-m-13"); // Tanggal 13 pada bulan dan tahun saat ini
                 $formattedDay = date("l, d F Y", strtotime($dateday)); // Mendapatkan nama hari dan tanggal
-    
+
                 // Mengganti nama hari dalam bahasa Inggris dengan versi bahasa Indonesia hanya untuk tanggal 13
                 if (array_key_exists(date("l", strtotime($dateday)), $dayNamesIndonesia)) {
                     $formattedDayIndonesia = str_replace(
@@ -358,7 +375,7 @@ class AdminController extends Controller
                         $dayNamesIndonesia[date("l", strtotime($dateday))],
                         $formattedDay
                     );
-    
+
                     // Mengganti nama bulan dalam bahasa Inggris dengan versi bahasa Indonesia hanya untuk tanggal 13
                     foreach ($monthNamesIndonesia as $englishMonth => $indonesianMonth) {
                         if (strpos($formattedDayIndonesia, $englishMonth) !== false) {
@@ -366,14 +383,14 @@ class AdminController extends Controller
                         }
                     }
                 }
-    
+
                 if (strpos($templateContent, $tagDay) !== false) {
                     $templateContent = str_replace($tagDay, $formattedDayIndonesia, $templateContent);
                 }
                 // // Simpan hasil ke file sementara
                 // $tempFilePath = public_path('outputbaru2.rtf');
                 // file_put_contents($tempFilePath, $templateContent);
-                
+
                 // ConvertApi::setApiSecret('bzF3tCL9x6IR0FFl');
                 // $result = ConvertApi::convert('pdf', [
                 //         'File' => $tempFilePath,

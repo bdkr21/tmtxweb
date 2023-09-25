@@ -10,7 +10,7 @@
       </div>
       <div class="modal-body">
         <form id="formEdit">
-          @csrf 
+          @csrf
             <input type="text" class="form-control" id="id" hidden>
           <div class="form-group">
             <label for="name">Name</label>
@@ -47,15 +47,21 @@
           <div class="form-group">
             <label for="nominalPermohonan">Nominal Permohonan</label>
             <select class="form-select" name="nominalPermohonan" id="nominalPermohonan">
-                @foreach ($nominalOptions as $value => $label)
-                    <option value="{{ $value }}" {{ $item->nominalPermohonan == $value ? 'selected' : '' }}>{{ $label }}</option>
-                @endforeach
+                @if(isset($item))
+                    @foreach ($nominalOptions as $value => $label)
+                        <option value="{{ $value }}" {{ $item->nominalPermohonan == $value ? 'selected' : '' }}>{{ $label }}</option>
+                    @endforeach
+                @else
+                    @foreach ($nominalOptions as $value => $label)
+                        <option value="{{ $value }}">{{ $label }}</option>
+                    @endforeach
+                @endif
             </select>
-          </div>                                        
-          <button type="submit" class="btn btn-primary" id="submitBtn">Save changes</button>
+          </div>
         </form>
-      </div>
-      <div class="modal-footer">
+    </div>
+    <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" id="submitBtn">Save changes</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
           <i class="bx bx-x d-block d-sm-none"></i>
           <span class="d-none d-sm-block">Close</span>

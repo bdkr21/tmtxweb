@@ -27,7 +27,7 @@ class Pemohon extends Migration
             $table->text('pencairanTahap1');
             $table->text('pencairanTahap2');
             $table->text('totalDiterima');
-            $table->text('filegambar');
+            $table->longText('filegambar');
             $table->timestamps();
         });
     }

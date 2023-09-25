@@ -12,7 +12,7 @@
         </header>
 
         <div class="page-heading">
-          <h3>Profile Statistics</h3>
+          <h3>Statistics</h3>
         </div>
         <div class="page-content">
           <section class="row">
@@ -30,7 +30,7 @@
                         </div>
                         <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
                           <h6 class="text-muted font-semibold">Data Pemohon</h6>
-                          <h6 class="font-extrabold mb-0">{{ $jumlahData }}</h6>
+                          <a href="{{ route('admin.dataPemohon') }}" class="font-extrabold mb-0 stretched-link">{{ $jumlahData }}</a>
                         </div>
                       </div>
                     </div>
@@ -44,16 +44,7 @@
         <footer>
           <div class="footer clearfix mb-0 text-muted">
             <div class="float-start">
-              <p>2023 &copy; Mazer</p>
-            </div>
-            <div class="float-end">
-              <p>
-                Crafted with
-                <span class="text-danger"
-                  ><i class="bi bi-heart-fill icon-mid"></i
-                ></span>
-                by <a href="https://saugi.me">Saugi</a>
-              </p>
+              <p>2023 &copy; Anak Magang</p>
             </div>
           </div>
         </footer>

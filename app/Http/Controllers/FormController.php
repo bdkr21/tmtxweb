@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Admin;
+use Illuminate\Support\Facades\File;
 
 class FormController extends Controller
 {
@@ -74,5 +76,54 @@ class FormController extends Controller
         }
 
         return view('form', compact('nominalOptions', 'selectedNominal', 'role', 'pencairanTahap1Formatted', 'pencairanTahap2Formatted', 'totalDiterimaFormatted'));
+    }
+
+    public function store(Request $request)
+    {
+        $validatedData = $request->validate([
+            'name' => 'required|string',
+            'dob' => 'required|string',
+            'area' => 'required|string',
+            'noSC' => 'required|string',
+            'noKTP' => 'required|string',
+            'agency' => 'required|string',
+            'namaAtasan' => 'required|string',
+            'noTelpAtasan' => 'required|string',
+            'nominalPermohonan' => 'required|string',
+            'pencairanTahap1' => 'required|string',
+            'pencairanTahap2' => 'required|string',
+            'totalDiterima' => 'required|string',
+            'nominalPermohonan' => 'required', // Add validation rules for other fields
+            'file' => 'required'
+        ]);
+
+        // Create a new Admin model instance and fill it with validated data
+            $admin = new Admin();
+            $admin->fill($validatedData);
+
+            // Handle file upload if needed
+            if ($request->hasFile('file')) {
+                $file = $request->file('file');
+                // Handle file storage and save the file path to the model.
+                // For example:
+                $fileName = time() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('gambar'), $fileName);
+                $img_encoded= base64_encode(file_get_contents(public_path('gambar/' . $fileName)));
+                $admin->filegambar = $img_encoded;
+                File::delete(public_path('gambar/' . $fileName));
+            }
+                // Save the data to the database
+                $admin->save();
+
+        // Handle file upload if needed
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            // Handle file storage and save the file path to the model.
+        }
+
+
+
+        // Redirect or return a response as needed
+        return redirect()->route('form')->with('success', 'Data has been saved.');
     }
 }

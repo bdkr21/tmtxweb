@@ -3,7 +3,7 @@
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="editModalLabel{{ $item->id }}">detail Data {{$item->name}}</h5>
+          <h5 class="modal-title" id="editModalLabel">detail Data</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -42,8 +42,8 @@
               <input type="text" class="form-control" id="noTelpAtasan" name="noTelpAtasan" disabled>
             </div>
             <div class="form-group">
-              <label for="Nominal Permohonan">Nominal Permohonan</label>
-              <input type="text" class="form-control" id="Nominal Permohonan" name="Nominal Permohonan" disabled>
+              <label for="nominalPermohonan">Nominal Permohonan</label>
+              <input type="text" class="form-control" id="nominalPermohonan" name="nominalPermohonan" disabled>
             </div>
         </div>
         <div class="modal-footer">
