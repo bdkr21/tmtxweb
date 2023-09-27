@@ -11,7 +11,7 @@
         </a>
       </header>
 
-      <div class="page-heading">
+      {{-- <div class="page-heading">
         <!-- Responsive tables start -->
         <section class="section">
           <div class="row" id="table-responsive">
@@ -74,7 +74,66 @@
             </div>
           </div>
         </section>
-      </div>
+      </div> --}}
+
+      <section class="section">
+        <div class="card">
+          <div class="card-header">jQuery Datatable</div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table" id="table1">
+                <thead>
+                  <tr>
+                    <th>No</th>
+                    <th>Name</th>
+                    <th>DOB</th>
+                    <th>Area</th>
+                    <th>Role</th>
+                    <th>ACTION</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    @php
+                    $counter = 1;
+                    @endphp
+                    @foreach ($data as $item)
+                    <tr id="tableRow-{{ $item->id }}">
+                      <td>{{ $counter++ }}</td>
+                      <td>{{ $item->name }}</td>
+                      <td>{{ $item->dob }}</td>
+                      <td>{{ $item->area }}</td>
+                      <td>{{ $item->role }}</td>
+                      <td>
+                        <a href="#" class="btn btn-info open-detail-modal" data-item="{{ $item->id }}">
+                          <i class="fa fa-eye"></i> Detail
+                        </a>
+
+                        <a href="#" class="btn btn-warning open-edit-modal" data-item="{{ $item->id }}">
+                          <i class="fa fa-pencil"></i> Edit
+                        </a>
+
+                        <a href="{{ route('admin.ngeprint', ['id' => $item->id]) }}" class="btn btn-success">
+                          <i class="fa fa-pencil"></i> PRINT
+                        </a>
+
+                        <form action="{{ route('admin.destroy', $item->id) }}" method="POST" style="display: inline-block;">
+                          @csrf
+                          @method('DELETE')
+                          <button type="submit" class="btn btn-danger delete-btn" data-admin-id="{{ $item->id }}">
+                              Delete
+                          </button>
+                        </form>
+                      </td>
+                    </tr>
+                    @endforeach
+                  </tbody>
+              </table>
+                  @include('layouts.admin.detail_modal')
+                  @include('layouts.admin.edit_modal')
+            </div>
+          </div>
+        </div>
+      </section>
 
       <footer>
         <div class="footer clearfix mb-0 text-muted">
@@ -104,7 +163,7 @@
               type: 'GET',
               dataType: 'json',
               success: function (data) {
-                $('#detailModal').find('.modal-title').text('Detail Data ');
+                $('#detailModal').find('.modal-title').text('Detail Data');
                 $('#detailModal').find('#id').val(data.id);
                 $('#detailModal').find('#name').val(data.name);
                 $('#detailModal').find('#dob').val(data.dob);
@@ -128,6 +187,7 @@
     });
     $(document).on('click', '.open-edit-modal', function () {
       // e.preventDefault();
+
           var itemId = $(this).data('item');
           $.ajax({
               url: '/admin/' + itemId + '/data',
@@ -137,6 +197,7 @@
                 $('#editModal').find('.modal-title').text('Edit Data');
                 $('#editModal').find('#id').val(data.id);
                 $('#editModal').find('#name').val(data.name);
+                $('#editModal').find('#role').val(data.role);
                 $('#editModal').find('#dob').val(data.dob);
                 $('#editModal').find('#area').val(data.area);
                 $('#editModal').find('#noSC').val(data.noSC);
@@ -145,6 +206,52 @@
                 $('#editModal').find('#namaAtasan').val(data.namaAtasan);
                 $('#editModal').find('#noTelpAtasan').val(data.noTelpAtasan);
                 $('#editModal').find('#nominalPermohonan').val(data.nominalPermohonan);
+
+
+                if (data.role === 'direct_sales') {
+
+                    var nominal = data.nominalPermohonan;
+                var selectElement = $('#editModal').find('#nominalPermohonan');
+                selectElement.empty(); // Kosongkan elemen select sebelum mengisi opsi-opsinya
+
+                // Generate opsi-opsi baru
+                var options = {
+                    '800000': '800 ribu',
+                    '1000000': '1 juta',
+                    '1500000': '1,5 juta'
+                };
+
+                // Tambahkan opsi-opsi ke elemen select
+                for (var value in options) {
+                    var option = $('<option>').val(value).text(options[value]);
+                    if (value === nominal) {
+                        option.attr('selected', 'selected');
+                    }
+                    selectElement.append(option);
+                }
+                } else {
+                // Jika peran adalah direct sales, atur opsi nominal hanya hingga 2 juta
+                var nominal = data.nominalPermohonan;
+                var selectElement = $('#editModal').find('#nominalPermohonan');
+                selectElement.empty(); // Kosongkan elemen select sebelum mengisi opsi-opsinya
+
+                // Generate opsi-opsi baru
+                var options = {
+                    '800000': '800 ribu',
+                    '1000000': '1 juta',
+                    '1500000': '1,5 juta',
+                    '2000000': '2 juta'
+                };
+
+                // Tambahkan opsi-opsi ke elemen select
+                for (var value in options) {
+                    var option = $('<option>').val(value).text(options[value]);
+                    if (value === nominal) {
+                        option.attr('selected', 'selected');
+                    }
+                    selectElement.append(option);
+                }
+            }
 
                 $('#editModal').modal('show');
             },

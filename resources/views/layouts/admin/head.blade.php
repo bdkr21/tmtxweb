@@ -20,9 +20,11 @@
     <link rel="stylesheet" href="{{asset('assets/compiled/css/app-dark.css')}}" />
     <link rel="stylesheet" href="{{asset('assets/compiled/css/iconly.css')}}" />
     <!-- Memasukkan DataTables CSS -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+    {{-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css"> --}}
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/extensions/datatables.net-bs5/css/dataTables.bootstrap5.min.css')}}">
 
     <link rel="stylesheet" href="{{asset('font-awesome-4.7.0/css/font-awesome.min.css')}}" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{asset('assets/compiled/css/table-datatable-jquery.css')}}" />
   </head>
   @yield('content')

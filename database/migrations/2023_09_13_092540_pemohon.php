@@ -23,6 +23,7 @@ class Pemohon extends Migration
             $table->text('agency');
             $table->text('namaAtasan');
             $table->text('noTelpAtasan');
+            $table->text('role');
             $table->text('nominalPermohonan');
             $table->text('pencairanTahap1');
             $table->text('pencairanTahap2');

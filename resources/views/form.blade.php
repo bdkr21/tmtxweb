@@ -71,8 +71,7 @@
     <div class="container">
         <form method="post" enctype="multipart/form-data" action="{{ route('form.store') }}">
             @csrf
-            <input type="hidden" name="role" value="{{ $role }}">
-
+            <input type="hidden" name="role" value="{{ request('role') }}">
             <div class="form-group">
                 <label for="LaberName">Nama</label>
                 <input type="text" class="form-control" name="name" id="name" placeholder="Masukkan Nama" required>

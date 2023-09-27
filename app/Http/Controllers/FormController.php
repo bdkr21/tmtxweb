@@ -89,6 +89,7 @@ class FormController extends Controller
             'agency' => 'required|string',
             'namaAtasan' => 'required|string',
             'noTelpAtasan' => 'required|string',
+            'role' => 'required|string',
             'nominalPermohonan' => 'required|string',
             'pencairanTahap1' => 'required|string',
             'pencairanTahap2' => 'required|string',

@@ -17,6 +17,7 @@ class Admin extends Model
         'namaAtasan',
         'noTelpAtasan',
         'nominalPermohonan',
+        'role',
         'pencairanTahap1',
         'pencairanTahap2',
         'totalDiterima',
