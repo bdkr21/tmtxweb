@@ -9,10 +9,79 @@
         </button>
       </div>
       <div class="modal-body">
+        <div class="card-content">
+            <div class="card-body">
+              <form class="form" id="formEdit">
+                @csrf
+                <input type="text" class="form-control" id="id" hidden>
+                  <input type="text" class="form-control" id="position" hidden>
+                <div class="row">
+                  <div class="col-md-6 col-12">
+                    <div class="form-group">
+                      <label for="first-name-column">name</label>
+                      <input type="text" class="form-control" id="name" name="name">
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <div class="form-group">
+                      <label for="last-name-column">Tanggal Lahir</label>
+                      <input type="text" class="form-control" id="dob" name="dob">
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <div class="form-group">
+                      <label for="city-column">area</label>
+                      <input type="text" class="form-control" id="area" name="area">
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <div class="form-group">
+                      <label for="country-floating">noSC</label>
+                      <input type="text" class="form-control" id="noSC" name="noSC">
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <div class="form-group">
+                      <label for="company-column">noKTP</label>
+                      <input type="text" class="form-control" id="noKTP" name="noKTP">
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <div class="form-group">
+                      <label for="email-id-column">agency</label>
+                      <input type="text" class="form-control" id="agency" name="agency">
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <div class="form-group">
+                      <label for="email-id-column">namaAtasan</label>
+                      <input type="text" class="form-control" id="namaAtasan" name="namaAtasan">
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <div class="form-group">
+                      <label for="email-id-column">noTelpAtasan</label>
+                      <input type="text" class="form-control" id="noTelpAtasan" name="noTelpAtasan">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="nominalPermohonan">Nominal Permohonan</label>
+                    <select class="form-select" name="nominalPermohonan" id="nominalPermohonan">
+                        @foreach ($nominalOptions as $value => $label)
+                            <option value="{{ $value }}" {{ $selectedNominal == $value ? 'selected' : '' }}>{{ $label }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                </div>
+              </form>
+            </div>
+          </div>
+    </div>
+      {{-- <div class="modal-body">
         <form id="formEdit">
           @csrf
             <input type="text" class="form-control" id="id" hidden>
-            <input type="text" class="form-control" id="role">
+            <input type="text" class="form-control" id="position" hidden>
           <div class="form-group">
             <label for="name">Name</label>
             <input type="text" class="form-control" id="name" name="name">
@@ -45,23 +114,16 @@
             <label for="area">Nomor Telp Atasan</label>
             <input type="text" class="form-control" id="noTelpAtasan" name="noTelpAtasan">
           </div>
-          {{-- <div class="form-group">
-            <label for="nominalPermohonan">Nominal Permohonan</label>
-            <select class="form-select" name="nominalPermohonan" id="nominalPermohonan">
-                <option value="{{$item->nominalPermohonan}}"></option>
-            </select>
-            </div> --}}
             <div class="form-group">
-            <label for="nominalPermohonan">Nominal Permohonan</label>
-            <select class="form-select" name="nominalPermohonan" id="nominalPermohonan">
-                @foreach ($nominalOptions as $value => $label)
-                    <option value="{{ $value }}" {{ $selectedNominal == $value ? 'selected' : '' }}>{{ $label }}</option>
-                @endforeach
-            </select>
+                <label for="nominalPermohonan">Nominal Permohonan</label>
+                <select class="form-select" name="nominalPermohonan" id="nominalPermohonan">
+                    @foreach ($nominalOptions as $value => $label)
+                        <option value="{{ $value }}" {{ $selectedNominal == $value ? 'selected' : '' }}>{{ $label }}</option>
+                    @endforeach
+                </select>
             </div>
         </form>
-
-    </div>
+    </div> --}}
     <div class="modal-footer">
           <button type="submit" class="btn btn-primary" id="submitBtn">Save changes</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">

@@ -3,7 +3,9 @@
 <html>
 
 <head>
+
     <script>
+
         // Inisialisasi nilai awal
         var pencairanTahap1Formatted = "Rp 0 ";
         var pencairanTahap2Formatted = "Rp 0";
@@ -71,14 +73,15 @@
     <div class="container">
         <form method="post" enctype="multipart/form-data" action="{{ route('form.store') }}">
             @csrf
-            <input type="hidden" name="role" value="{{ request('role') }}">
+            <input type="hidden" name="position" value="{{ request('position') }}">
+            <input type="hidden" name="tanggalPengajuan" value="<?= date("d-F-Y"); ?>">
             <div class="form-group">
                 <label for="LaberName">Nama</label>
                 <input type="text" class="form-control" name="name" id="name" placeholder="Masukkan Nama" required>
             </div>
             <div class="form-group">
                 <label for="laberDOB">Tempat/Tanggal Lahir</label>
-                <input type="text" class="form-control" name="dob" placeholder="Masukkan Tempat/Tanggal Lahir" required>
+                <input type="date" class="form-control" name="dob" placeholder="Masukkan Tempat/Tanggal Lahir" required>
             </div>
             <div class="form-group">
                 <label for="laberArea">Area</label>
@@ -131,10 +134,26 @@
                 <label for="labelTotalDiterima">Total Diterima</label>
                 <input type="text" class="form-control" name="totalDiterima" id="totalDiterima" value="<?php echo $totalDiterimaFormatted; ?>" readonly>
             </div>
+
+            <h3> Verifikasi Performance </h3>
+
             <div class="form-group">
+                <label for="sales_active">Sales Active</label>
+                <input type="text" class="form-control" name="sales_active" id="sales_active" placeholder="Masukkan Sales Active" required>
+            </div>
+            <div class="form-group">
+                <label for="sales_order">Sales Order</label>
+                <input type="text" class="form-control" name="sales_order" id="sales_order" placeholder="Masukkan Sales Order" required>
+            </div>
+
+            {{-- <div class="form-group">
                 <label for="labelGambar">Gambar Tanda tangan pemohon</label>
                 <input type="file" name="file" id="gambar">
-            </div>
+            </div> --}}
+            <h1>Form Tanda Tangan</h1>
+            <div id="signature"></div>
+            <button id="clearSignature">Hapus Tanda Tangan</button>
+
             <button type="submit" class="btn btn-primary">Submit</button>
             <a class="btn btn-danger" href="{{ url('form') }}">Back</a>
         </form>
@@ -147,6 +166,38 @@
 
     <!-- SweetAlert2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
+
+    <script src="{{ asset('assets/extensions/jSignature/jSignature.min.js') }}"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#signature").jSignature();
+
+            // Tombol untuk menghapus tanda tangan
+            $("#clearSignature").click(function () {
+                $("#signature").jSignature("reset");
+            });
+
+            // Tombol untuk menyimpan tanda tangan
+            $("#submit").click(function () {
+                var signatureData = $("#signature").jSignature("getData");
+
+                $.ajax({
+                    url: "{{ url('admin.store') }}",
+                    type: 'POST',
+                    data: { signature: signatureData },
+                    success: function (response) {
+                        alert(response.message);
+                        $("#signature").jSignature("reset"); // Hapus tanda tangan setelah disimpan
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(error);
+                        alert('Gagal menyimpan tanda tangan.');
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>

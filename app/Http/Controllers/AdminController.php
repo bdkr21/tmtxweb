@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Brian2694\Toastr\Facades\Toastr; // Import the Toastr facade
 use App\Models\Admin;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
 
 
 
@@ -56,10 +55,7 @@ class AdminController extends Controller
                 $totalDiterima = $pencairanTahap1 + $pencairanTahap2;
             }
 
-            $data = Admin::all(); // Mengambil semua data dari tabel pemohon
-
             return view('admin.dataPemohon', [
-                'data' => $data,
                 'nominalOptions' => $nominalOptions,
                 'selectedNominal' => $selectedNominal,
                 'pencairanTahap1' => $pencairanTahap1,
@@ -233,7 +229,6 @@ class AdminController extends Controller
 
             if(file_exists($templatePath)) {
                 $templateContent = file_get_contents($templatePath);
-
                 // Daftar field dan tag yang sesuai dalam template RTF
                 $fieldTags = [
                     'namaAtasan' => 'INPUT_NAMA_ATASAN',
@@ -247,8 +242,17 @@ class AdminController extends Controller
                     'nominalPermohonan' => 'INPUT_NOMINAL_PERMOHONAN',
                     'pencairanTahap1' => 'INPUT_TAHAP_1',
                     'pencairanTahap2' => 'INPUT_TAHAP_2',
-                    'totalDiterima' => 'INPUT_TOTAL_DITERIMA'
+                    'totalDiterima' => 'INPUT_TOTAL_DITERIMA',
+                    '' => 'INPUT_PEFORMANCE'
                 ];
+
+                // Menghitung nilai INPUT_PEFORMANCE
+                $salesInput = $data['sales_active'] + $data['sales_order'];
+                $fieldTags[''] = 'INPUT_PEFORMANCE';
+                $data['INPUT_PEFORMANCE'] = $salesInput;
+
+                // Gantikan tag INPUT_PEFORMANCE yang kosong dengan nilai yang sudah dihitung
+                $templateContent = str_replace('INPUT_PEFORMANCE', $data['INPUT_PEFORMANCE'], $templateContent);
 
                 foreach ($fieldTags as $field => $tag) {
                     $value = isset($data[$field]) ? $data[$field] : '';
@@ -256,6 +260,8 @@ class AdminController extends Controller
                         $templateContent = str_replace($tag, $value, $templateContent);
                     }
                 }
+
+
                 $image = bin2hex(base64_decode($data->filegambar));
                 // $image = file_get_contents();
                 $templateContent = str_replace("89504e470d0a1a0a0000000d4948445200000096000000960802000000b363e6b5000000017352474200aece1ce90000000467414d410000b18f0bfc6105000000097048597300000ec300000ec301c76fa8640000005949444154785eedc13101000000c2a0f54f6d076f20000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000038d400085100019ab63a600000000049454e44ae426082", $image, $templateContent);
@@ -343,9 +349,9 @@ class AdminController extends Controller
                 if (strpos($templateContent, $tagDay) !== false) {
                     $templateContent = str_replace($tagDay, $formattedDayIndonesia, $templateContent);
                 }
-                // // Simpan hasil ke file sementara
-                // $tempFilePath = public_path('outputbaru2.rtf');
-                // file_put_contents($tempFilePath, $templateContent);
+                // Simpan hasil ke file sementara
+                $tempFilePath = public_path('outputbaru2.rtf');
+                file_put_contents($tempFilePath, $templateContent);
 
                 // ConvertApi::setApiSecret('bzF3tCL9x6IR0FFl');
                 // $result = ConvertApi::convert('pdf', [

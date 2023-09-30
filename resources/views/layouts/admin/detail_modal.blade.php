@@ -1,5 +1,5 @@
 <!-- Detail Modal -->
-<div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel" aria-hidden="true">
+<div class="modal fade modal-lg" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
         <div class="modal-header">
@@ -9,42 +9,66 @@
           </button>
         </div>
         <div class="modal-body">
-            <div class="form-group">
-              <label for="name">Name</label>
-              <input type="text" class="form-control" id="name" name="name" disabled>
-            </div>
-            <div class="form-group">
-              <label for="dob">DOB</label>
-              <input type="text" class="form-control" id="dob" name="dob" disabled>
-            </div>
-            <div class="form-group">
-              <label for="area">Area</label>
-              <input type="text" class="form-control" id="area" name="area" disabled>
-            </div>
-            <div class="form-group">
-              <label for="noSC">Nomer SC</label>
-              <input type="text" class="form-control" id="noSC" name="noSC" disabled>
-            </div>
-            <div class="form-group">
-              <label for="noKTP">Nomer KTP</label>
-              <input type="text" class="form-control" id="noKTP" name="noKTP" disabled>
-            </div>
-            <div class="form-group">
-              <label for="agency">Agency</label>
-              <input type="text" class="form-control" id="agency" name="agency" disabled>
-            </div>
-            <div class="form-group">
-              <label for="namaAtasan">Nama Atasan</label>
-              <input type="text" class="form-control" id="namaAtasan" name="namaAtasan" disabled>
-            </div>
-            <div class="form-group">
-              <label for="noTelpAtasan">Nomor Telp Atasan</label>
-              <input type="text" class="form-control" id="noTelpAtasan" name="noTelpAtasan" disabled>
-            </div>
-            <div class="form-group">
-              <label for="nominalPermohonan">Nominal Permohonan</label>
-              <input type="text" class="form-control" id="nominalPermohonan" name="nominalPermohonan" disabled>
-            </div>
+            <div class="card-content">
+                <div class="card-body">
+                  <form class="form">
+                    <div class="row">
+                      <div class="col-md-6 col-12">
+                        <div class="form-group">
+                          <label for="first-name-column">name</label>
+                          <input type="text" class="form-control" id="name" name="name" readonly>
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-12">
+                        <div class="form-group">
+                          <label for="last-name-column">Tanggal Lahir</label>
+                          <input type="text" class="form-control" id="dob" name="dob" readonly>
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-12">
+                        <div class="form-group">
+                          <label for="city-column">area</label>
+                          <input type="text" class="form-control" id="area" name="area" readonly>
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-12">
+                        <div class="form-group">
+                          <label for="country-floating">noSC</label>
+                          <input type="text" class="form-control" id="noSC" name="noSC" readonly>
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-12">
+                        <div class="form-group">
+                          <label for="company-column">noKTP</label>
+                          <input type="text" class="form-control" id="noKTP" name="noKTP" readonly>
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-12">
+                        <div class="form-group">
+                          <label for="email-id-column">agency</label>
+                          <input type="text" class="form-control" id="agency" name="agency" readonly>
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-12">
+                        <div class="form-group">
+                          <label for="email-id-column">namaAtasan</label>
+                          <input type="text" class="form-control" id="namaAtasan" name="namaAtasan" readonly>
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-12">
+                        <div class="form-group">
+                          <label for="email-id-column">noTelpAtasan</label>
+                          <input type="text" class="form-control" id="noTelpAtasan" name="noTelpAtasan" readonly>
+                        </div>
+                      </div>
+                        <div class="form-group">
+                          <label for="email-id-column">nominalPermohonan</label>
+                          <input type="text" class="form-control" id="nominalPermohonan" name="nominalPermohonan" readonly>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">

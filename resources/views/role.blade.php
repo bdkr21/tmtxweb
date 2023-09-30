@@ -5,8 +5,8 @@
                 <div class="d-flex justify-content-center">
                     <div class="text-center">
                         <h1 class="mx-auto my-0 text-uppercase">peminjaman sebagai</h1>
-                        <a class="btn btn-primary mt-5" href="{{ url('form') }}?role=direct_sales">Direct Sales</a>
-                        <a class="btn btn-primary mt-5" href="{{ url('form') }}?role=area_supervisor">Area Super Visor</a>
+                        <a class="btn btn-primary mt-5" href="{{ url('form') }}?position=direct sales">Direct Sales</a>
+                        <a class="btn btn-primary mt-5" href="{{ url('form') }}?position=area supervisor">Area Super Visor</a>
                       </div>
                 </div>
             </div>

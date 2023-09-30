@@ -1,6 +1,7 @@
 <?php
 
 
+use App\Http\Controllers\API\PemohonController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\FormController;
@@ -27,9 +28,9 @@ Route::get('/form', [FormController::class, 'index'])->name('form');
 Route::post('/store', [FormController::class, 'store'])->name('form.store');
 Route::post('form', [FormController::class, 'create'])->name('form.create');
 
-    Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth'])->group(function () {
 
-
+        Route::post('/admin/delete-by-month', [PemohonController::class, 'deleteByMonth'])->name('admin.deleteByMonth');
         Route::get('/data-pemohon', 'App\Http\Controllers\AdminControllere@dataPemohon')->name('dataPemohon');
         Route::get('admin/data-Pemohon', 'App\Http\Controllers\AdminController@dataPemohon')->name('admin.dataPemohon');
         Route::get('/admin/{id}/data', 'App\Http\Controllers\AdminController@getAdminData');

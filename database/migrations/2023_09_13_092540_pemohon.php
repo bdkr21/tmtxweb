@@ -16,14 +16,17 @@ class Pemohon extends Migration
         Schema::create('pemohon', function (Blueprint $table) {
             $table->id();
             $table->text('name');
-            $table->text('dob');
+            $table->date('dob');
             $table->text('area');
             $table->text('noSC');
             $table->text('noKTP');
             $table->text('agency');
             $table->text('namaAtasan');
+            $table->text('tanggalPengajuan');
             $table->text('noTelpAtasan');
-            $table->text('role');
+            $table->text('position');
+            $table->text('sales_active');
+            $table->text('sales_order');
             $table->text('nominalPermohonan');
             $table->text('pencairanTahap1');
             $table->text('pencairanTahap2');
