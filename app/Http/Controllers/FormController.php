@@ -54,7 +54,10 @@ class FormController extends Controller
             $biayaAdministrasi = 25000;
 
             // Hitung nilai-nilai berdasarkan pilihan nominal
-            if ($selectedNominal === 800000) {
+            if ($selectedNominal === 500000) {
+                $pencairanTahap1 = $selectedNominal - $biayaAdministrasi;
+                $totalDiterima = $pencairanTahap1;
+            } elseif ($selectedNominal === 800000) {
                 $pencairanTahap1 = $selectedNominal - $biayaAdministrasi;
                 $totalDiterima = $pencairanTahap1;
             } elseif ($selectedNominal === 1000000) {
@@ -99,32 +102,39 @@ class FormController extends Controller
             'pencairanTahap1' => 'required|string',
             'pencairanTahap2' => 'required|string',
             'totalDiterima' => 'required|string',
-            'file' => 'required'
+            'signature' => 'required'
         ]);
+
+        // Mengambil substring dari 'signature' input
+        $signature = $request->input('signature');
+        $signatureSubstring = substr($signature, strpos($signature, ',') + 1);
 
         // Create a new Admin model instance and fill it with validated data
             $admin = new Admin();
             $admin->fill($validatedData);
 
             // Handle file upload if needed
-            if ($request->hasFile('file')) {
-                $file = $request->file('file');
-                // Handle file storage and save the file path to the model.
-                // For example:
-                $fileName = time() . '.' . $file->getClientOriginalExtension();
-                $file->move(public_path('gambar'), $fileName);
-                $img_encoded= base64_encode(file_get_contents(public_path('gambar/' . $fileName)));
-                $admin->filegambar = $img_encoded;
-                File::delete(public_path('gambar/' . $fileName));
-            }
-                // Save the data to the database
-                $admin->save();
+            // if ($request->hasFile('file')) {
+            //     $file = $request->file('file');
+            //     // Handle file storage and save the file path to the model.
+            //     // For example:
+            //     $fileName = time() . '.' . $file->getClientOriginalExtension();
+            //     $file->move(public_path('gambar'), $fileName);
+            //     $img_encoded= base64_encode(file_get_contents(public_path('gambar/' . $fileName)));
+            //     $admin->filegambar = $img_encoded;
+            //     File::delete(public_path('gambar/' . $fileName));
+            // }
 
-        // Handle file upload if needed
-        if ($request->hasFile('file')) {
-            $file = $request->file('file');
-            // Handle file storage and save the file path to the model.
-        }
+            // // Handle file upload if needed
+            // if ($request->hasFile('file')) {
+            //     $file = $request->file('file');
+            //     // Handle file storage and save the file path to the model.
+            // }
+            // Simpan substring 'signature' ke dalam model Admin
+            $admin->signature = $signatureSubstring;
+
+            // Save the data to the database
+            $admin->save();
         // Redirect or return a response as needed
         return redirect()->route('form')->with('success', 'Data has been saved.');
     }

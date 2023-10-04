@@ -25,6 +25,7 @@ class AdminController extends Controller
     public function dataPemohon(Request $request)
         {
             $nominalOptions = [
+                500000 => 'Rp.500.000',
                 800000 => 'Rp.800.000',
                 1000000 => 'Rp.1.000.000',
                 1500000 => 'Rp.1.500.000',
@@ -38,7 +39,10 @@ class AdminController extends Controller
             $totalDiterima = 0;
 
             // Hitung nilai-nilai berdasarkan pilihan nominal
-            if ($selectedNominal === 800000) {
+            if ($selectedNominal === 500000) {
+                $pencairanTahap1 = $selectedNominal - $biayaAdministrasi;
+                $totalDiterima = $pencairanTahap1;
+            } elseif ($selectedNominal === 800000) {
                 $pencairanTahap1 = $selectedNominal - $biayaAdministrasi;
                 $totalDiterima = $pencairanTahap1;
             } elseif ($selectedNominal === 1000000) {
@@ -130,7 +134,7 @@ class AdminController extends Controller
             'agency' => 'required',
             'namaAtasan' => 'required',
             'noTelpAtasan' => 'required',
-            'nominalPermohonan' => 'required|in:800000,1000000,1500000,2000000',
+            'nominalPermohonan' => 'required|in:500000,800000,1000000,1500000,2000000',
         ]);
         // Temukan data Admin berdasarkan ID
         $admin = Admin::findOrFail($id);
@@ -153,7 +157,11 @@ class AdminController extends Controller
             $biayaAdministrasi = 25000;
             $selectedNominal = (int)$request->input('nominalPermohonan');
 
-            if ($selectedNominal === 800000) {
+            if ($selectedNominal === 500000) {
+                $pencairanTahap1 = $selectedNominal - $biayaAdministrasi;
+                $pencairanTahap2 = 0;
+                $totalDiterima = $pencairanTahap1;
+            } elseif ($selectedNominal === 800000) {
                 $pencairanTahap1 = $selectedNominal - $biayaAdministrasi;
                 $pencairanTahap2 = 0;
                 $totalDiterima = $pencairanTahap1;
@@ -271,7 +279,7 @@ class AdminController extends Controller
                 }
 
 
-                $image = bin2hex(base64_decode($data->filegambar));
+                $image = bin2hex(base64_decode($data->signature));
                 // $image = file_get_contents();
                 $templateContent = str_replace("89504e470d0a1a0a0000000d4948445200000096000000960802000000b363e6b5000000017352474200aece1ce90000000467414d410000b18f0bfc6105000000097048597300000ec300000ec301c76fa8640000005949444154785eedc13101000000c2a0f54f6d076f20000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000038d400085100019ab63a600000000049454e44ae426082", $image, $templateContent);
 
@@ -349,17 +357,17 @@ class AdminController extends Controller
                 $tempFilePath = public_path('outputbaru2.rtf');
                 file_put_contents($tempFilePath, $templateContent);
 
-                ConvertApi::setApiSecret('bzF3tCL9x6IR0FFl');
-                $result = ConvertApi::convert('pdf', [
-                        'File' => $tempFilePath,
-                    ], 'rtf'
-                );
-                // Save the PDF file
-                $pdfFilePath = public_path(date('Ymd_his') . '.pdf');
-                $result->saveFiles($pdfFilePath);
+                // ConvertApi::setApiSecret('bzF3tCL9x6IR0FFl');
+                // $result = ConvertApi::convert('pdf', [
+                //         'File' => $tempFilePath,
+                //     ], 'rtf'
+                // );
+                // // Save the PDF file
+                // $pdfFilePath = public_path(date('Ymd_his') . '.pdf');
+                // $result->saveFiles($pdfFilePath);
 
-                // Download the PDF file as a response
-                return response()->download($pdfFilePath)->deleteFileAfterSend();
+                // // Download the PDF file as a response
+                // return response()->download($pdfFilePath)->deleteFileAfterSend();
     }
  }
 }

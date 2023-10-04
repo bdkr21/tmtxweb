@@ -149,12 +149,11 @@
                 <input type="text" class="form-control" name="sales_order" id="sales_order" placeholder="Masukkan Sales Order" required>
             </div>
 
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <label for="labelGambar">Gambar Tanda tangan pemohon</label>
                 <input type="file" name="file" id="gambar">
-            </div>
-
-            {{-- <div class="mb-3">
+            </div> --}}
+            <div class="mb-3">
                 <label for="signature" class="fs-5">Tanda Tangan</label>
                 <div id="signature-pad" class="signature-pad">
                     <canvas width="600" height="200" ></canvas>
@@ -162,7 +161,7 @@
                 <button id="clear-signature" class="btn btn-outline-danger mt-2">Hapus Tanda Tangan</button>
                 <input type="hidden" name="signature" id="signature" />
             </div>
-            <hr> --}}
+            <hr>
 
 
             <button type="submit" class="btn btn-primary">Submit</button>
