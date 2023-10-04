@@ -81,59 +81,51 @@ class FormController extends Controller
     }
 
     public function store(Request $request)
-{
-    $validatedData = $request->validate([
-        'name' => 'required|string',
-        'dob' => 'required|string',
-        'area' => 'required|string',
-        'noSC' => 'required|string',
-        'noKTP' => 'required|string',
-        'agency' => 'required|string',
-        'namaAtasan' => 'required|string',
-        'tanggalPengajuan' => 'required|string',
-        'noTelpAtasan' => 'required|string',
-        'position' => 'required|string',
-        'sales_active' => 'required|string',
-        'sales_order' => 'required|string',
-        'nominalPermohonan' => 'required|string',
-        'pencairanTahap1' => 'required|string',
-        'pencairanTahap2' => 'required|string',
-        'totalDiterima' => 'required|string',
-        'signature' => 'required', // Menambahkan validasi untuk tanda tangan
-    ]);
+    {
+        $validatedData = $request->validate([
+            'name' => 'required|string',
+            'dob' => 'required|string',
+            'area' => 'required|string',
+            'noSC' => 'required|string',
+            'noKTP' => 'required|string',
+            'agency' => 'required|string',
+            'namaAtasan' => 'required|string',
+            'tanggalPengajuan' => 'required|string',
+            'noTelpAtasan' => 'required|string',
+            'position' => 'required|string',
+            'sales_active' => 'required|string',
+            'sales_order' => 'required|string',
+            'nominalPermohonan' => 'required|string',
+            'pencairanTahap1' => 'required|string',
+            'pencairanTahap2' => 'required|string',
+            'totalDiterima' => 'required|string',
+            'file' => 'required'
+        ]);
 
-    // Create a new Admin model instance and fill it with validated data
-    $admin = new Admin();
-    $admin->fill($validatedData);
+        // Create a new Admin model instance and fill it with validated data
+            $admin = new Admin();
+            $admin->fill($validatedData);
 
-    // Handle file upload if needed (assuming you still need to handle other files)
-    if ($request->hasFile('file')) {
-        $file = $request->file('file');
-        // Handle file storage and save the file path to the model.
-        $fileName = time() . '.' . $file->getClientOriginalExtension();
-        $file->move(public_path('gambar'), $fileName);
-        $img_encoded = base64_encode(file_get_contents(public_path('gambar/' . $fileName)));
-        $admin->filegambar = $img_encoded;
-        File::delete(public_path('gambar/' . $fileName));
+            // Handle file upload if needed
+            if ($request->hasFile('file')) {
+                $file = $request->file('file');
+                // Handle file storage and save the file path to the model.
+                // For example:
+                $fileName = time() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('gambar'), $fileName);
+                $img_encoded= base64_encode(file_get_contents(public_path('gambar/' . $fileName)));
+                $admin->filegambar = $img_encoded;
+                File::delete(public_path('gambar/' . $fileName));
+            }
+                // Save the data to the database
+                $admin->save();
+
+        // Handle file upload if needed
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            // Handle file storage and save the file path to the model.
+        }
+        // Redirect or return a response as needed
+        return redirect()->route('form')->with('success', 'Data has been saved.');
     }
-
-    // Handle signature
-    if ($request->has('signature')) {
-        $signatureData = $request->input('signature');
-
-        $admin->signature = $signatureData;
-
-        // Handle storing the signature data, for example:
-        // $signatureFileName = time() . '.png';
-        // file_put_contents(public_path('signatures/' . $signatureFileName), base64_decode($signatureData));
-        // $admin->signature = 'signatures/' . $signatureFileName;
-    }
-
-    // Save the data to the database
-    $admin->save();
-
-    // Redirect or return a response as needed
-    return redirect()->route('form')->with('success', 'Data has been saved.');
-}
-
 }

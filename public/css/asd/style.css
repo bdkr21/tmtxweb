@@ -1,0 +1,90 @@
+/*===========Google Font==============*/
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Lora:wght@400;500;700&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Poppins:ital,wght@0,100;0,300;1,100;1,300&display=swap');
+/*===========Utama============*/
+*, html, body{
+    margin: 0;
+    padding: 0;
+    font-family: 'Lato', sans-serif;
+    font-family: 'Lora', serif;
+}
+
+.gambar {
+    image: url("../gambar/workers-considering-term-agreement.jpg");
+}
+/*=================== Responsive=========================== */
+/* xs */
+@media screen and (max-width: 600px) {
+    .container {
+        float: none;
+        display: block;
+        text-align: left;
+    }
+}
+/*=====================Bagian container===========================*/
+.container{
+    width: auto;
+    height: auto;
+    border: 1px solid;
+    padding-top: 30px;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 95px;
+    display: flex;
+    flex-direction: column;
+}
+/*=============Bagian navigation=============== */
+.navi{
+   width: 100%;
+   height: 9rem;
+   border-bottom: 3px double #000000;
+}
+.tengah{
+   display: block;
+   margin-top: 5%;
+   text-align: center;
+}
+.tengah h2{
+    font-size: 40px;
+}
+.tengah p{
+    margin-top: 3%;
+    font-size: 17px;
+}
+
+.navi img{
+    display: flex;
+    margin-left: 20%;
+    margin-top: 7%;
+
+}
+/* ===================Bagian Content=================== */
+h3{
+    display: flex;
+    margin-left: 25%;
+    margin-top: 2%;
+}
+.mb-3 input{
+    width: 30em;
+}
+.mb-3 textarea{
+    width: 30em;
+}
+/* .ttd{
+    width:100%;
+    height: 120%;
+} */
+/*=================Bagian-bagian paragaraf============= */
+.p3{
+    font-size: 18px;
+}
+/* ======================singnature======================= */
+.singnature{
+    border: 1px solid;
+    margin-left: 50%;
+    text-align: center;
+    width: 25%;
+}
+.btn{
+    margin-top: 6%;
+    margin-left: 40%;
+}

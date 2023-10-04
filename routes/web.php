@@ -1,7 +1,6 @@
 <?php
 
 
-use App\Http\Controllers\API\PemohonController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\FormController;
@@ -27,6 +26,8 @@ Route::get('/', [IndexController::class, 'index'])->name('form');
 Route::get('/form', [FormController::class, 'index'])->name('form');
 Route::post('/store', [FormController::class, 'store'])->name('form.store');
 Route::post('form', [FormController::class, 'create'])->name('form.create');
+
+
 
 Route::middleware(['auth'])->group(function () {
 

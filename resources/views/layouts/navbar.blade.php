@@ -19,15 +19,15 @@
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
             <div class="container px-4 px-lg-5">
-              <a class="navbar-brand" href="/">Koperasi TMT</a>
-                <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                    Menu
-                    <i class="fas fa-bars"></i>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <a class="navbar-brand" href="/">
+                <img src="{{ asset('gambar/IMG-20230928-WA0015.jpg') }}" alt="Logo" width="120" height="32" class="d-inline-block align-text-top">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+                <div class="collapse navbar-collapse " id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
-
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -68,23 +68,6 @@
                         @endguest
                     </ul>
                 </div>
-                {{-- <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-                        @auth
-                        <li class="nav-item"><a class="nav-link" href="{{ route('admin.index')}}">DASHBOARD</a></li>
-                            {{auth()->user()->name}}
-                            <div class="text-end">
-                                <li class="nav-item"><a class="nav-link"href="{{ route('logout') }}"onclick="event.preventDefault();document.getElementById('logout-form').submit();">LOGOUT</a></li>
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                    @csrf
-                                </form>
-                            </div>
-                        @endauth
-                        @guest
-                        <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">LOGIN</a></li>
-                        @endguest
-                    </ul>
-                </div> --}}
             </div>
         </nav>
+

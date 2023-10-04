@@ -25,7 +25,10 @@
             var biayaAdministrasi1 = 25000;
             var biayaAdministrasi2 = 25000;
 
-            if (selectedNominal == "800000") {
+            if (selectedNominal == "500000") {
+                pencairanTahap1 = 500000 - biayaAdministrasi1;
+                totalDiterima = selectedNominal - biayaAdministrasi1;
+            } else if (selectedNominal == "800000") {
                 pencairanTahap1 = 800000 - biayaAdministrasi1;
                 totalDiterima = selectedNominal - biayaAdministrasi1;
             } else if (selectedNominal == "1000000") {
@@ -146,13 +149,21 @@
                 <input type="text" class="form-control" name="sales_order" id="sales_order" placeholder="Masukkan Sales Order" required>
             </div>
 
-            {{-- <div class="form-group">
+            <div class="form-group">
                 <label for="labelGambar">Gambar Tanda tangan pemohon</label>
                 <input type="file" name="file" id="gambar">
-            </div> --}}
-            <h1>Form Tanda Tangan</h1>
-            <div id="signature"></div>
-            <button id="clearSignature">Hapus Tanda Tangan</button>
+            </div>
+
+            {{-- <div class="mb-3">
+                <label for="signature" class="fs-5">Tanda Tangan</label>
+                <div id="signature-pad" class="signature-pad">
+                    <canvas width="600" height="200" ></canvas>
+                </div>
+                <button id="clear-signature" class="btn btn-outline-danger mt-2">Hapus Tanda Tangan</button>
+                <input type="hidden" name="signature" id="signature" />
+            </div>
+            <hr> --}}
+
 
             <button type="submit" class="btn btn-primary">Submit</button>
             <a class="btn btn-danger" href="{{ url('form') }}">Back</a>
@@ -167,37 +178,30 @@
     <!-- SweetAlert2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
 
-    <script src="{{ asset('assets/extensions/jSignature/jSignature.min.js') }}"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad"></script>
     <script>
-        $(document).ready(function () {
-            $("#signature").jSignature();
 
-            // Tombol untuk menghapus tanda tangan
-            $("#clearSignature").click(function () {
-                $("#signature").jSignature("reset");
-            });
+    var canvas = document.querySelector("canvas");
+    var signaturePad = new SignaturePad(canvas);
+    var clearButton = document.getElementById("clear-signature");
+    var signatureInput = document.getElementById("signature");
 
-            // Tombol untuk menyimpan tanda tangan
-            $("#submit").click(function () {
-                var signatureData = $("#signature").jSignature("getData");
+    clearButton.addEventListener("click", function(event) {
+        event.preventDefault();
+        signaturePad.clear();
+        signatureInput.value = ""; // Clear the input value when the signature is cleared
+    });
 
-                $.ajax({
-                    url: "{{ url('admin.store') }}",
-                    type: 'POST',
-                    data: { signature: signatureData },
-                    success: function (response) {
-                        alert(response.message);
-                        $("#signature").jSignature("reset"); // Hapus tanda tangan setelah disimpan
-                    },
-                    error: function (xhr, status, error) {
-                        console.error(error);
-                        alert('Gagal menyimpan tanda tangan.');
-                    }
-                });
-            });
-        });
+    document.querySelector('form').addEventListener('submit', function(event) {
+        if (!signaturePad.isEmpty()) {
+            var dataURL = signaturePad.toDataURL();
+            // console.log("Base64 Signature:", dataURL);
+            signatureInput.value = dataURL;
+        }
+    });
+
     </script>
+
 </body>
 
 </html>

@@ -319,5 +319,20 @@
             });
         });
     </script>
+
+    <script>
+        function printData() {
+            var iframe = document.createElement('iframe');
+            iframe.src = '/cetak'; // Sesuaikan URL dengan rute yang Anda buat
+            iframe.style.display = 'none';
+            document.body.appendChild(iframe);
+
+            iframe.onload = function() {
+                iframe.contentWindow.print();
+                document.body.removeChild(iframe);
+            };
+        }
+    </script>
+
 @endsection
 

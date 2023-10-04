@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\PemohonController;
+use App\Http\Controllers\API\CetakController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -20,5 +21,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::get('/data/pemohon', [PemohonController::class, 'index'])->name('api.data.pemohon');
-
+Route::get('/cetak/{id}', [CetakController::class, 'cetakData'])->name('api.cetak');
 
