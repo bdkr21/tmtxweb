@@ -221,10 +221,6 @@ class AdminController extends Controller
     public function ngeprint(Request $request, $id){
 
         $data = Admin::find($id);
-
-        // dd($data->id);
-        //     exit();
-
             $templatePath = public_path('basic_form.rtf'); // Ganti dengan path ke berkas RTF template
 
             if(file_exists($templatePath)) {
@@ -246,6 +242,19 @@ class AdminController extends Controller
                     '' => 'INPUT_PEFORMANCE'
                 ];
 
+                $formatFields = ['nominalPermohonan', 'pencairanTahap1', 'pencairanTahap2', 'totalDiterima'];
+                foreach ($formatFields as $field) {
+                    if (isset($data[$field])) {
+                        $value = (float) $data[$field]; // Konversi ke float
+                        $formattedValue = number_format($value, 0, ",", ".");
+                        $data[$field] = $formattedValue;
+                        $tag = 'INPUT_' . strtoupper($field);
+                        if (strpos($templateContent, $tag) !== false) {
+                            $templateContent = str_replace($tag, $formattedValue, $templateContent);
+                        }
+                    }
+                }
+
                 // Menghitung nilai INPUT_PEFORMANCE
                 $salesInput = $data['sales_active'] + $data['sales_order'];
                 $fieldTags[''] = 'INPUT_PEFORMANCE';
@@ -265,19 +274,6 @@ class AdminController extends Controller
                 $image = bin2hex(base64_decode($data->filegambar));
                 // $image = file_get_contents();
                 $templateContent = str_replace("89504e470d0a1a0a0000000d4948445200000096000000960802000000b363e6b5000000017352474200aece1ce90000000467414d410000b18f0bfc6105000000097048597300000ec300000ec301c76fa8640000005949444154785eedc13101000000c2a0f54f6d076f20000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000038d400085100019ab63a600000000049454e44ae426082", $image, $templateContent);
-
-                // Format nominal
-                $formatFields = ['nominalPermohonan', 'pencairanTahap1', 'pencairanTahap2', 'totalDiterima'];
-                foreach ($formatFields as $field) {
-                    if (isset($data[$field])) {
-                        $value = (float) str_replace(',', '', $data[$field]); // Konversi ke float
-                        $formattedValue = number_format($value, 0, ",", ".") . ",-";
-                        $tag = 'INPUT_' . strtoupper($field);
-                        if (strpos($templateContent, $tag) !== false) {
-                            $templateContent = str_replace($tag, $formattedValue, $templateContent);
-                        }
-                    }
-                }
 
                 $tag = 'DATE_FULL';
                 $tagDay = 'DATE_DAY';
