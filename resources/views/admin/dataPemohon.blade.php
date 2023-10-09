@@ -68,6 +68,8 @@
     </div>
   </div>
   @include('layouts.admin.script')
+
+
   <script>
 
     var table = $('#tabledata1').DataTable({
@@ -119,6 +121,8 @@
                     $('#detailModal').find('#agency').val(data.agency);
                     $('#detailModal').find('#namaAtasan').val(data.namaAtasan);
                     $('#detailModal').find('#noTelpAtasan').val(data.noTelpAtasan);
+                    $('#detailModal').find('#sales_active').val(data.sales_active);
+                    $('#detailModal').find('#sales_order').val(data.sales_order);
 
                     var formattedNominal = 'Rp.' + new Intl.NumberFormat('id-ID').format(data.nominalPermohonan);
                     $('#detailModal').find('#nominalPermohonan').val(formattedNominal);
@@ -154,6 +158,8 @@
                     $('#editModal').find('#agency').val(data.agency);
                     $('#editModal').find('#namaAtasan').val(data.namaAtasan);
                     $('#editModal').find('#noTelpAtasan').val(data.noTelpAtasan);
+                    $('#editModal').find('#sales_active').val(data.sales_active);
+                    $('#editModal').find('#sales_order').val(data.sales_order);
                     $('#editModal').find('#nominalPermohonan').val(data.nominalPermohonan);
 
 
@@ -333,6 +339,7 @@
             };
         }
     </script>
+
 
 @endsection
 

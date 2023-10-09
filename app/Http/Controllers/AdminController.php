@@ -150,6 +150,8 @@ class AdminController extends Controller
                 'agency' => $request->input('agency'),
                 'namaAtasan' => $request->input('namaAtasan'),
                 'noTelpAtasan' => $request->input('noTelpAtasan'),
+                'sales_active' => $request->input('sales_active'),
+                'sales_order' => $request->input('sales_order'),
                 'nominalPermohonan' => $request->input('nominalPermohonan'),
             ]);
 

@@ -64,6 +64,18 @@
                       <input type="text" class="form-control" id="noTelpAtasan" name="noTelpAtasan">
                     </div>
                   </div>
+                  <div class="col-md-6 col-12">
+                    <div class="form-group">
+                      <label for="email-id-column">Sales Active</label>
+                      <input type="text" class="form-control" id="sales_active" name="sales_active">
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <div class="form-group">
+                      <label for="email-id-column">Sales Order</label>
+                      <input type="text" class="form-control" id="sales_order" name="sales_order">
+                    </div>
+                  </div>
                   <div class="form-group">
                     <label for="nominalPermohonan">Nominal Permohonan</label>
                     <select class="form-select" name="nominalPermohonan" id="nominalPermohonan">
