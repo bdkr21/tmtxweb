@@ -19,10 +19,11 @@ class CetakController extends Controller
         $dataUrl = 'data:image/png;base64,' . base64_encode($decodedSignature);
         $salesInput = $data['sales_active'] + $data['sales_order'];
 
-        $formatNompel ='Rp. ' .number_format($data->nominalPermohonan, 0, ',', '.'); // Format angka dengan 2 desimal, tanda koma sebagai pemisah ribuan, dan titik sebagai pemisah desimal
-        $pencairanTahap1Formatted ='Rp. ' .number_format($data->pencairanTahap1, 0, ',', '.'); // Format angka dengan 2 desimal, tanda koma sebagai pemisah ribuan, dan titik sebagai pemisah desimal
-        $pencairanTahap2Formatted ='Rp. ' .number_format($data->pencairanTahap2, 0, ',', '.'); // Format angka dengan 2 desimal, tanda koma sebagai pemisah ribuan, dan titik sebagai pemisah desimal
-        $totalDiterimaFormatted ='Rp. ' .number_format($data->totalDiterima, 0, ',', '.'); // Format angka dengan 2 desimal, tanda koma sebagai pemisah ribuan, dan titik sebagai pemisah desimal
+        $formatNompel = 'Rp. ' . number_format(floatval($data->nominalPermohonan), 0, ',', '.');
+        $pencairanTahap1Formatted = 'Rp. ' . number_format(floatval($data->pencairanTahap1), 0, ',', '.');
+        $pencairanTahap2Formatted = 'Rp. ' . number_format(floatval($data->pencairanTahap2), 0, ',', '.');
+        $totalDiterimaFormatted = 'Rp. ' . number_format(floatval($data->totalDiterima), 0, ',', '.');
+
 
         // dd($pencairanTahap1Formatted);
 
@@ -40,13 +41,12 @@ class CetakController extends Controller
         ['data' => $data,
          'dataUrl' => $dataUrl,
           'salesInput' => $salesInput,
-          'formatNompel' => $formatNompel,
-          'pencairanTahap1Formatted' => $pencairanTahap1Formatted,
-          'pencairanTahap2Formatted' => $pencairanTahap2Formatted,
-          'totalDiterimaFormatted' => $totalDiterimaFormatted,
+          'formatNompel' => $formatNompel
+
         ]);
         $html = $view->render();
         $html = preg_replace('/>\s+</', "><", $html);
+
         $pdf = PDF::loadHTML($html);
 
         return $pdf->download('document.pdf');

@@ -114,6 +114,7 @@
                     $('#detailModal').find('.modal-title').text('Detail Data');
                     $('#detailModal').find('#id').val(data.id);
                     $('#detailModal').find('#name').val(data.name);
+                    $('#detailModal').find('#tempat_lahir').val(data.tempat_lahir);
                     $('#detailModal').find('#dob').val(data.dob);
                     $('#detailModal').find('#area').val(data.area);
                     $('#detailModal').find('#noSC').val(data.noSC);
@@ -151,6 +152,7 @@
                     $('#editModal').find('#id').val(data.id);
                     $('#editModal').find('#name').val(data.name);
                     $('#editModal').find('#position').val(data.position);
+                    $('#editModal').find('#tempat_lahir').val(data.tempat_lahir);
                     $('#editModal').find('#dob').val(data.dob);
                     $('#editModal').find('#area').val(data.area);
                     $('#editModal').find('#noSC').val(data.noSC);

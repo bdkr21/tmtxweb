@@ -123,19 +123,6 @@ class AdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // Validasi input form
-
-        $validatedData = $request->validate([
-            'name' => 'required',
-            'dob' => 'required',
-            'area' => 'required',
-            'noSC' => 'required',
-            'noKTP' => 'required',
-            'agency' => 'required',
-            'namaAtasan' => 'required',
-            'noTelpAtasan' => 'required',
-            'nominalPermohonan' => 'required|in:500000,800000,1000000,1500000,2000000',
-        ]);
         // Temukan data Admin berdasarkan ID
         $admin = Admin::findOrFail($id);
 
@@ -143,6 +130,7 @@ class AdminController extends Controller
             //code...
             $admin->update([
                 'name' => $request->input('name'),
+                'tempat_lahir' => $request->input('tempat_lahir'),
                 'dob' => $request->input('dob'),
                 'area' => $request->input('area'),
                 'noSC' => $request->input('noSC'),
@@ -160,23 +148,31 @@ class AdminController extends Controller
             $selectedNominal = (int)$request->input('nominalPermohonan');
 
             if ($selectedNominal === 500000) {
-                $pencairanTahap1 = $selectedNominal - $biayaAdministrasi;
+                $pencairanTahap1 = $selectedNominal;
                 $pencairanTahap2 = 0;
-                $totalDiterima = $pencairanTahap1;
+                $totalDiterima = $selectedNominal - $biayaAdministrasi;
             } elseif ($selectedNominal === 800000) {
-                $pencairanTahap1 = $selectedNominal - $biayaAdministrasi;
+                $pencairanTahap1 = $selectedNominal;
                 $pencairanTahap2 = 0;
-                $totalDiterima = $pencairanTahap1;
+                $totalDiterima = $selectedNominal - $biayaAdministrasi;
+            } elseif ($selectedNominal === 1500000) {
+                $pencairanTahap1 = 800000;
+                $pencairanTahap2 = 700000;
+                $totalDiterima = $selectedNominal - $biayaAdministrasi * 2;
             } else { // Anda bisa menggunakan elseif untuk kasus lain jika diperlukan
-                $pencairanTahap1 = ($selectedNominal - $biayaAdministrasi) / 2;
-                $pencairanTahap2 = $pencairanTahap1;
-                $totalDiterima = $pencairanTahap1 + $pencairanTahap2;
+                $pencairanTahap1 =  $selectedNominal / 2;
+                $pencairanTahap2 =  $selectedNominal / 2;
+                $totalDiterima = $selectedNominal - $biayaAdministrasi * 2;
             }
 
+            $pencairanTahap1Formatted = 'Rp. ' . number_format($pencairanTahap1);
+            $pencairanTahap2Formatted = 'Rp. ' . number_format($pencairanTahap2);
+            $totalDiterimaFormatted = 'Rp. ' . number_format($totalDiterima);
+
             $admin->update([
-                'pencairanTahap1' => $pencairanTahap1,
-                'pencairanTahap2' => $pencairanTahap2,
-                'totalDiterima' => $totalDiterima,
+                'pencairanTahap1' => $pencairanTahap1Formatted,
+                'pencairanTahap2' => $pencairanTahap2Formatted,
+                'totalDiterima' => $totalDiterimaFormatted,
             ]);
             // Show a success Toastr notification
             Toastr::success('Data has been updated successfully', 'Success');

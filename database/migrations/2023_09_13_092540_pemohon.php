@@ -16,6 +16,7 @@ class Pemohon extends Migration
         Schema::create('pemohon', function (Blueprint $table) {
             $table->id();
             $table->text('name');
+            $table->text('tempat_lahir');
             $table->date('dob');
             $table->text('area');
             $table->text('noSC');

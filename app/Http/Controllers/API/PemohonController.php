@@ -26,7 +26,7 @@ class PemohonController extends Controller
                                           Delete
                                       </button>
                                     </form>';
-                        $action .= '<a href="'.route("api.cetak", ["id" => $row->id]).'" class="btn btn-secondary btn-sm">Print</a>';
+                        $action .= '<a href="'.route("api.cetak", ["id" => $row->id]).'" class="btn btn-secondary btn-sm" target="_blank">Print</a>';
                         return $action;
                     })
                     ->rawColumns(['action'])

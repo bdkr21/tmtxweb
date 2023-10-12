@@ -55,17 +55,63 @@
             document.getElementById("pencairanTahap2").value = pencairanTahap2Formatted;
             document.getElementById("totalDiterima").value = totalDiterimaFormatted;
         }
-
-        setDefaultNominal();
     </script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>KOPERASI KARYAWAN</title>
 </head>
 
 <style>
+
+    .signature-pad
+    {
+        border:1px solid #d1cfcf;
+    }
     body {
         background-color: #f0f0f0;
     }
+
+    @media (max-width: 844px) {
+
+        h2 {
+            margin-top: 5px;
+            font-size: 16px
+        }
+            .form-group {
+                margin-bottom: 15px; /* Mengurangi margin antara elemen form-group */
+            }
+
+            .form-control {
+                font-size: 12.5px; /* Mengurangi ukuran font pada input */
+            }
+
+            .signature-pad canvas {
+                width: 100%; /* Mengisi lebar tanda tangan sesuai lebar layar */
+            }
+        }
+
+    @media (max-width: 928px) {
+
+        .container h3,h4 {
+            font-size: 17px;
+
+        }
+
+        h2 {
+            margin-top: 5px;
+            font-size: 16px
+        }
+            .form-group {
+                margin-bottom: 15px; /* Mengurangi margin antara elemen form-group */
+            }
+
+            .form-control {
+                font-size: 12.5px; /* Mengurangi ukuran font pada input */
+            }
+
+            .signature-pad canvas {
+                width: 100%; /* Mengisi lebar tanda tangan sesuai lebar layar */
+            }
+        }
 </style>
 
 <body>
@@ -82,9 +128,16 @@
                 <label for="LaberName">Nama</label>
                 <input type="text" class="form-control" name="name" id="name" placeholder="Masukkan Nama" required>
             </div>
-            <div class="form-group">
-                <label for="laberDOB">Tempat/Tanggal Lahir</label>
-                <input type="date" class="form-control" name="dob" placeholder="Masukkan Tempat/Tanggal Lahir" required>
+            <div class="row">
+                <div class="col">
+                    <label for="tempat_lahir" class="fs-5">Tempat Lahir</label>
+                        <input name="tempat_lahir" type="text" class="form-control" placeholder="Masukkan Tempat Lahir" required>
+                    {{-- <small class="text-danger">{{$errors->first('tempat_lahir')}}</small> --}}
+                </div>
+                <div class="col">
+                    <label for="labelDOB">Tempat/Tanggal Lahir</label>
+                    <input type="date" class="form-control" name="dob" placeholder="Masukkan Tempat/Tanggal Lahir" required>
+                </div>
             </div>
             <div class="form-group">
                 <label for="laberArea">Area</label>
@@ -121,21 +174,22 @@
                         <option value="{{ $value }}" {{ $selectedNominal == $value ? 'selected' : '' }}>{{ $label }}</option>
                     @endforeach
                 </select>
+
             </div>
 
             <div class="form-group">
                 <label for="labelPencairanTahap1">Pencairan Tahap 1</label>
-                <input type="text" class="form-control" name="pencairanTahap1" id="pencairanTahap1" value="<?php echo $pencairanTahap1Formatted; ?>" readonly>
+                <input type="text" class="form-control" name="pencairanTahap1" id="pencairanTahap1"readonly>
                 <small id="pencairanTahap1Help" class="form-text text-muted text-danger">Biaya Administrasi Sebesar Rp.25.000</small>
             </div>
             <div class="form-group">
                 <label for="labelPencairanTahap2">Pencairan Tahap 2</label>
-                <input type="text" class="form-control" name="pencairanTahap2" id="pencairanTahap2" value="<?php echo $pencairanTahap2Formatted; ?>" readonly>
+                <input type="text" class="form-control" name="pencairanTahap2" id="pencairanTahap2"readonly>
                 <small id="pencairanTahap2Help" class="form-text text-muted text-danger">Biaya Administrasi Sebesar Rp.25.000</small>
             </div>
             <div class="form-group">
                 <label for="labelTotalDiterima">Total Diterima</label>
-                <input type="text" class="form-control" name="totalDiterima" id="totalDiterima" value="<?php echo $totalDiterimaFormatted; ?>" readonly>
+                <input type="text" class="form-control" name="totalDiterima" id="totalDiterima"readonly>
             </div>
 
             <h3> Verifikasi Performance </h3>
@@ -148,15 +202,10 @@
                 <label for="sales_order">Sales Order</label>
                 <input type="text" class="form-control" name="sales_order" id="sales_order" placeholder="Masukkan Sales Order" required>
             </div>
-
-            {{-- <div class="form-group">
-                <label for="labelGambar">Gambar Tanda tangan pemohon</label>
-                <input type="file" name="file" id="gambar">
-            </div> --}}
             <div class="mb-3">
                 <label for="signature" class="fs-5">Tanda Tangan</label>
                 <div id="signature-pad" class="signature-pad">
-                    <canvas width="600" height="200" ></canvas>
+                    <canvas width="450" height="200" ></canvas>
                 </div>
                 <button id="clear-signature" class="btn btn-outline-danger mt-2">Hapus Tanda Tangan</button>
                 <input type="hidden" name="signature" id="signature" />

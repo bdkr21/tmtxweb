@@ -8,6 +8,7 @@
         display: inline-block;
     }
 body {
+    font-family: 'Arimo', sans-serif;
     font-size: 10.5px;
     height: 100%;
 }
@@ -82,8 +83,8 @@ ul.info-list2 {
         </div>
         <br>
         <ul class="info-list">
-            <li><b>Nama</b><span class="">{{ $data->name }}</span></li>
-            <li><b>Tempat/Tanggal Lahir</b>{{ $data->dob }}</li>
+            <li><b>Nama</b>{{ $data->name }}</span></li>
+            <li><b>Tempat/Tanggal Lahir</b>{{ $data->tempat_lahir }} {{ $data->dob }}</li>
             <li><b>Area</b>{{ $data->area }}</li>
             <li><b>No SC</b>{{ $data->noSC }}</li>
             <li><b>No KTP</b>{{ $data->noKTP }}</li>
@@ -97,21 +98,21 @@ ul.info-list2 {
         </div>
             <ul class="info-list2">
                 <li><b>Nominal Permohonan</b>{{ $formatNompel }}</li>
-                <li><b>Pencairan Tahap 1</b>{{ $pencairanTahap1Formatted }}</li>
+                <li><b>Pencairan Tahap 1</b>{{ $data->pencairanTahap1 }}</li>
                 <li><b>Biaya Administrasi</b>Rp. 25.000,-</li>
-                <li><b>Pencairan Tahap 2</b>{{ $pencairanTahap2Formatted }}</li>
+                <li><b>Pencairan Tahap 2</b>{{ $data->pencairanTahap2 }}</li>
                 <li><b>Biaya Administrasi</b>Rp. 25.000,-</li>
-                <li><b>Total Diterima</b>{{ $totalDiterimaFormatted }}</li>
+                <li><b>Total Diterima</b>{{ $data->totalDiterima }}</li>
             </ul>
-            <div style="margin-left: 35px">
+            <div style="margin-left: 35px;">
                 Pinjaman akan didebet di rekening yang terdaftar diagency untuk penggajian<br>
                 bulan berjalan
             </div>
-            <p style="text-align: center; margin-right: -275px">{{$data->tanggalPengajuan}}</p>
+            <p style="text-align: center; margin-right: -275px">{{$data->area}}, {{$data->tanggalPengajuan}}</p>
             <p style="text-align: center; margin-right: -275px; margin-top: 5px">Pemohon</p>
             <p style="text-align: center; margin-right: -355px; margin-top: 20px"><img  style="width: 230px" src="{{ $dataUrl }}" alt="Signature"></p>
-            <p style="text-align: center; margin-right: -275px; margin-top: 20px">({{$data->name}})</p>
-            <p style="margin-left: 75px">*<i>Jika Transfer diluar bank mandiri akan kena charge Rp. 6500,- / sesuai peraturan perbankan</i></p>
+            <p style="text-align: center; margin-right: -275px; margin-top: 20px">( {{$data->name}} )</p>
+            <p style="margin-left: 75px; font-weight: bold;">*<i>Jika Transfer diluar bank mandiri akan kena charge Rp. 6500,- / sesuai peraturan perbankan</i></p>
             <div style="margin-left: 75px; margin-bottom: 40px;">
                 Menyetujui permohonan Pinjaman sebagaimana Tersebut diatas :
                 <p>1. Verifikasi Performance : {{$salesInput}}</p>

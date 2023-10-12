@@ -15,18 +15,18 @@ class FormController extends Controller
         // Tetapkan pilihan nominal berdasarkan peran
         if ($position === 'direct sales') {
             $nominalOptions = [
-                500000 => 'Rp.500.000',
-                800000 => 'Rp.800.000',
-                1000000 => 'Rp.1.000.000',
-                1500000 => 'Rp.1.500.000'
+                500000 => 'Rp.500,000',
+                800000 => 'Rp.800,000',
+                1000000 => 'Rp.1,000,000',
+                1500000 => 'Rp.1,500,000'
             ];
         } elseif ($position === 'area supervisor') {
             $nominalOptions = [
-                500000 => 'Rp.500.000',
-                800000 => 'Rp.800.000',
-                1000000 => 'Rp.1.000.000',
-                1500000 => 'Rp.1.500.000',
-                2000000 => 'Rp.2.000.000'
+                500000 => 'Rp.500,000',
+                800000 => 'Rp.800,000',
+                1000000 => 'Rp.1,000,000',
+                1500000 => 'Rp.1,500,000',
+                2000000 => 'Rp.2,000,000'
             ];
         } else {
             // Handle case when position is 'default_position' or any other unknown position
@@ -36,9 +36,6 @@ class FormController extends Controller
         }
 
         // Inisialisasi nilai default
-        $pencairanTahap1Formatted = "Rp 0";
-        $pencairanTahap2Formatted = "Rp 0";
-        $totalDiterimaFormatted = "Rp  0";
         $selectedNominal = 0; // Inisialisasi nilai pilihan nominal
 
         // Fungsi untuk format angka dengan pemisah ribuan (contoh: 1,000,000)
@@ -74,19 +71,16 @@ class FormController extends Controller
                 $totalDiterima = $pencairanTahap1 + $pencairanTahap2;
             }
 
-            // Format nilai-nilai setelah perhitungan
-            $pencairanTahap1Formatted = formatNumber($pencairanTahap1) . 'Rp 0';
-            $pencairanTahap2Formatted = formatNumber($pencairanTahap2) . 'Rp 0';
-            $totalDiterimaFormatted = formatNumber($totalDiterima) . 'Rp 0';
         }
 
-        return view('form', compact('nominalOptions', 'selectedNominal', 'position', 'pencairanTahap1Formatted', 'pencairanTahap2Formatted', 'totalDiterimaFormatted'));
+        return view('form', compact('nominalOptions', 'selectedNominal', 'position'));
     }
 
     public function store(Request $request)
     {
         $validatedData = $request->validate([
             'name' => 'required|string',
+            'tempat_lahir' => 'required|string',
             'dob' => 'required|string',
             'area' => 'required|string',
             'noSC' => 'required|string',

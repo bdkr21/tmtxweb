@@ -21,6 +21,12 @@
                       </div>
                       <div class="col-md-6 col-12">
                         <div class="form-group">
+                          <label for="last-name-column">Tempat Lahir</label>
+                          <input type="text" class="form-control" id="tempat_lahir" name="tempat_lahir" readonly>
+                        </div>
+                      </div>
+                      <div class="col-md-6 col-12">
+                        <div class="form-group">
                           <label for="last-name-column">Tanggal Lahir</label>
                           <input type="text" class="form-control" id="dob" name="dob" readonly>
                         </div>
