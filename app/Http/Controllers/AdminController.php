@@ -175,7 +175,6 @@ class AdminController extends Controller
                 'totalDiterima' => $totalDiterimaFormatted,
             ]);
             // Show a success Toastr notification
-            Toastr::success('Data has been updated successfully', 'Success');
 
             return response()->json([
                 'status' => true,
@@ -184,7 +183,6 @@ class AdminController extends Controller
 
         } catch (\Throwable $th) {
             // Show an error Toastr notification
-            Toastr::error('Data update failed', 'Error');
 
             return response()->json([
                 'status' => false,

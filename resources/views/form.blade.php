@@ -70,7 +70,7 @@
         background-color: #f0f0f0;
     }
 
-    @media (max-width: 844px) {
+    @media (max-width: 667px) {
 
         h2 {
             margin-top: 5px;
@@ -115,118 +115,127 @@
 </style>
 
 <body>
-    <center>
-        <h2>FORM PEMINJAMAN</h2>
-    </center>
-
     <div class="container">
+        <div class="text-center">
+            <h2>FORM PEMINJAMAN</h2>
+        </div>
+
         <form method="post" enctype="multipart/form-data" action="{{ route('form.store') }}">
             @csrf
             <input type="hidden" name="position" value="{{ request('position') }}">
             <input type="hidden" name="tanggalPengajuan" value="<?= date("d-F-Y"); ?>">
+
             <div class="form-group">
-                <label for="LaberName">Nama</label>
+                <label for="name">Nama</label>
                 <input type="text" class="form-control" name="name" id="name" placeholder="Masukkan Nama" required>
             </div>
-            <div class="row">
-                <div class="col">
+
+            <div class="form-row">
+                <div class="form-group col">
                     <label for="tempat_lahir" class="fs-5">Tempat Lahir</label>
-                        <input name="tempat_lahir" type="text" class="form-control" placeholder="Masukkan Tempat Lahir" required>
-                    {{-- <small class="text-danger">{{$errors->first('tempat_lahir')}}</small> --}}
+                    <input name="tempat_lahir" type="text" class="form-control" placeholder="Masukkan Tempat Lahir" required>
                 </div>
-                <div class="col">
-                    <label for="labelDOB">Tempat/Tanggal Lahir</label>
-                    <input type="date" class="form-control" name="dob" placeholder="Masukkan Tempat/Tanggal Lahir" required>
+                <div class="form-group col">
+                    <label for="dob">Tempat/Tanggal Lahir</label>
+                    <input type="date" class="form-control" name="dob" required>
                 </div>
             </div>
+
             <div class="form-group">
-                <label for="laberArea">Area</label>
+                <label for="area">Area</label>
                 <input type="text" class="form-control" name="area" placeholder="Masukkan Area" required>
             </div>
+
             <div class="form-group">
-                <label for="LaberNoSC">No SC</label>
+                <label for="noSC">No SC</label>
                 <input type="text" class="form-control" name="noSC" placeholder="Masukkan No SC" required>
             </div>
+
             <div class="form-group">
-                <label for="labelKTP">No KTP</label>
+                <label for="noKTP">No KTP</label>
                 <input type="text" class="form-control" name="noKTP" placeholder="Masukkan No KTP" required>
             </div>
+
             <div class="form-group">
-                <label for="labelAgency">Agency</label>
+                <label for="agency">Agency</label>
                 <input type="text" class="form-control" name="agency" placeholder="Masukkan Agency" required>
             </div>
+
             <div class="form-group">
-                <label for="labelNamaAtasan">Nama Atasan</label>
+                <label for="namaAtasan">Nama Atasan</label>
                 <input type="text" class="form-control" name="namaAtasan" placeholder="Masukkan Nama Atasan" required>
             </div>
+
             <div class="form-group">
-                <label for="labelNoTelpAtasan">No Telp Atasan</label>
+                <label for="noTelpAtasan">No Telp Atasan</label>
                 <input type="text" class="form-control" name="noTelpAtasan" placeholder="Masukkan No Telp Atasan" required>
             </div>
 
             <h4>Dengan ini mengajukan peminjaman Kepada Koperasi Sebagai Berikut</h4>
 
             <div class="form-group">
-                <label for="labelNominalPermohonan">Nominal Permohonan</label>
+                <label for="nominalPermohonan">Nominal Permohonan</label>
                 <select class="form-control" name="nominalPermohonan" id="nominalPermohonan" onchange="calculateResult()">
-                    <option value="" selected readonly>Pilih Nominal</option> <!-- Nilai awal kosong -->
+                    <option value="" selected disabled>Pilih Nominal</option>
                     @foreach ($nominalOptions as $value => $label)
                         <option value="{{ $value }}" {{ $selectedNominal == $value ? 'selected' : '' }}>{{ $label }}</option>
                     @endforeach
                 </select>
-
             </div>
 
             <div class="form-group">
-                <label for="labelPencairanTahap1">Pencairan Tahap 1</label>
-                <input type="text" class="form-control" name="pencairanTahap1" id="pencairanTahap1"readonly>
-                <small id="pencairanTahap1Help" class="form-text text-muted text-danger">Biaya Administrasi Sebesar Rp.25.000</small>
-            </div>
-            <div class="form-group">
-                <label for="labelPencairanTahap2">Pencairan Tahap 2</label>
-                <input type="text" class="form-control" name="pencairanTahap2" id="pencairanTahap2"readonly>
-                <small id="pencairanTahap2Help" class="form-text text-muted text-danger">Biaya Administrasi Sebesar Rp.25.000</small>
-            </div>
-            <div class="form-group">
-                <label for="labelTotalDiterima">Total Diterima</label>
-                <input type="text" class="form-control" name="totalDiterima" id="totalDiterima"readonly>
+                <label for="pencairanTahap1">Pencairan Tahap 1</label>
+                <input type="text" class="form-control" name="pencairanTahap1" id="pencairanTahap1" readonly>
+                <small class="form-text text-muted text-danger">Biaya Administrasi Sebesar Rp.25.000</small>
             </div>
 
-            <h3> Verifikasi Performance </h3>
+            <div class="form-group">
+                <label for="pencairanTahap2">Pencairan Tahap 2</label>
+                <input type="text" class="form-control" name="pencairanTahap2" id="pencairanTahap2" readonly>
+                <small class="form-text text-muted text-danger">Biaya Administrasi Sebesar Rp.25.000</small>
+            </div>
+
+            <div class="form-group">
+                <label for="totalDiterima">Total Diterima</label>
+                <input type="text" class="form-control" name="totalDiterima" id="totalDiterima" readonly>
+            </div>
+
+            <h3>Verifikasi Performance</h3>
 
             <div class="form-group">
                 <label for="sales_active">Sales Active</label>
                 <input type="text" class="form-control" name="sales_active" id="sales_active" placeholder="Masukkan Sales Active" required>
             </div>
+
             <div class="form-group">
                 <label for="sales_order">Sales Order</label>
                 <input type="text" class="form-control" name="sales_order" id="sales_order" placeholder="Masukkan Sales Order" required>
             </div>
+
             <div class="mb-3">
                 <label for="signature" class="fs-5">Tanda Tangan</label>
                 <div id="signature-pad" class="signature-pad">
-                    <canvas width="450" height="200" ></canvas>
+                    <canvas width="450" height="200"></canvas>
                 </div>
                 <button id="clear-signature" class="btn btn-outline-danger mt-2">Hapus Tanda Tangan</button>
                 <input type="hidden" name="signature" id="signature" />
             </div>
-            <hr>
 
+            <hr>
 
             <button type="submit" class="btn btn-primary">Submit</button>
             <a class="btn btn-danger" href="{{ url('form') }}">Back</a>
         </form>
     </div>
+
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <!-- SweetAlert2 CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
-
-    <!-- SweetAlert2 JS -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
-
     <script src="https://cdn.jsdelivr.net/npm/signature_pad"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script>
 
     var canvas = document.querySelector("canvas");
@@ -249,7 +258,6 @@
     });
 
     </script>
-
 </body>
 
 </html>

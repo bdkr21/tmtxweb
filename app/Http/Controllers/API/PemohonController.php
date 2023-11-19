@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use DataTables;
 
-class PemohonController extends Controller
+    class PemohonController extends Controller
 {
     //
     public function index() {
